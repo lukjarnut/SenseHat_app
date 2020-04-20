@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Weather Station</string>
+    <string name="startBtnText">START</string>
+    <string name="stopBtnText">STOP</string>
+    <string name="configBtnText">CONFIG</string>
+
+    <string name="temperatureText">Temperature</string>
+    <string name="pressureText">Pressure</string>
+    <string name="humidityText">Humidity</string>
+    <string name="Label1Text">Temperature</string>
+    <string name="Label2Text">Humidity</string>
+
+    <string name="ChartBtn">Charts</string>
+    <string name="LEDBtn">LED Matrix</string>
+    <string name="SettingsBtn">Settings</string>
+</resources>

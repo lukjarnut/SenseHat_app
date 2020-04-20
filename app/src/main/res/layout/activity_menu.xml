@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="parent">
+        <View
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_weight="1" />
+        <Button
+            android:id="@+id/chartbtn"
+            android:layout_width="229dp"
+            android:layout_height="64dp"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:text="@string/ChartBtn"
+            android:layout_gravity="center"
+            android:onClick="btns_onClick"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/ledbtn"
+            android:layout_width="229dp"
+            android:layout_height="64dp"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:text="@string/LEDBtn"
+            android:layout_gravity="center"
+            android:onClick="btns_onClick"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/settingsbtn"
+            android:layout_width="229dp"
+            android:layout_height="64dp"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:text="@string/SettingsBtn"
+            android:layout_gravity="center"
+            android:onClick="btns_onClick"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_weight="1" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
