@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="Chart_settings_font_size">20sp</dimen>
+    <dimen name="Chart_settings_padding">6sp</dimen>
+
+</resources>

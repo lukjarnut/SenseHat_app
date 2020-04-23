@@ -31,7 +31,7 @@ import java.util.TimerTask;
 
 import static java.lang.Double.isNaN;
 
-public class Chart3 extends AppCompatActivity {
+public class Chart1 extends AppCompatActivity {
 
     /* BEGIN config data */
     private String ipAddress = COMMON.CONFIG_IP_ADDRESS;
@@ -43,35 +43,15 @@ public class Chart3 extends AppCompatActivity {
     private TextView textViewSampleTime;
     private TextView textViewError;
 
-    /* Temperature */
-    private GraphView temperatureGraph;
-    private LineGraphSeries<DataPoint> temperatureSeries;
-    private final int temperatureGraphMaxDataPointsNumber = 1000;
-    private final double temperatureGraphMaxX = 10.0d;
-    private final double temperatureGraphMinX = 0.0d;
-    private final double temperatureGraphMaxY = 110.0d;
-    private final double temperatureGraphMinY = -30.0d;
+    private GraphView Graph;
+    private LineGraphSeries<DataPoint> Series;
+    private final int GraphMaxDataPointsNumber = 1000;
+    private final double GraphMaxX = 10.0d;
+    private final double GraphMinX = 0.0d;
+    private final double GraphMaxY = 110.0d;
+    private final double GraphMinY = -30.0d;
     private AlertDialog.Builder configAlterDialog;
 
-    /* Pressure */
-    private GraphView pressureGraph;
-    private LineGraphSeries<DataPoint> pressureSeries;
-    private final int pressureGraphMaxDataPointsNumber = 1000;
-    private final double pressureGraphMaxX = 10.0d;
-    private final double pressureGraphMinX = 0.0d;
-    private final double pressureGraphMaxY = 1260.0d;
-    private final double pressureGraphMinY = 260.0d;
-    private AlertDialog.Builder configAlterDialog2;
-
-    /* Humidity */
-    private GraphView humidityGraph;
-    private LineGraphSeries<DataPoint> humiditySeries;
-    private final int humidityGraphMaxDataPointsNumber = 1000;
-    private final double humidityGraphMaxX = 10.0d;
-    private final double humidityGraphMinX = 0.0d;
-    private final double humidityGraphMaxY = 100.0d;
-    private final double humidityGraphMinY = 0.0d;
-    private AlertDialog.Builder configAlterDialog3;
     /* END widgets */
 
     /* BEGIN request timer */
@@ -91,7 +71,7 @@ public class Chart3 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chart_3);
 
-    /* BEGIN initialize widgets */
+        /* BEGIN initialize widgets */
         /* BEGIN initialize TextViews */
         textViewIP = findViewById(R.id.textViewIP);
         textViewIP.setText(getIpAddressDisplayText(ipAddress));
@@ -103,44 +83,24 @@ public class Chart3 extends AppCompatActivity {
         textViewError.setText("");
         /* END initialize TextViews */
 
-        /* BEGIN initialize Graphs */
+        /* BEGIN initialize Graph */
         // https://github.com/jjoe64/GraphView/wiki
         final TextView textView = (TextView) findViewById(R.id.pressureLabel);
 
-        temperatureGraph = (GraphView)findViewById(R.id.temperatureGraph);
-        temperatureSeries = new LineGraphSeries<>(new DataPoint[]{});
-        temperatureGraph.addSeries(temperatureSeries);
-        temperatureGraph.getViewport().setXAxisBoundsManual(true);
-        temperatureGraph.getViewport().setMinX(temperatureGraphMinX);
-        temperatureGraph.getViewport().setMaxX(temperatureGraphMaxX);
-        temperatureGraph.getViewport().setYAxisBoundsManual(true);
-        temperatureGraph.getViewport().setMinY(temperatureGraphMinY);
-        temperatureGraph.getViewport().setMaxY(temperatureGraphMaxY);
+        Graph = (GraphView)findViewById(R.id.temperatureGraph);
+        Series = new LineGraphSeries<>(new DataPoint[]{});
+        Graph.addSeries(Series);
+        Graph.getViewport().setXAxisBoundsManual(true);
+        Graph.getViewport().setMinX(GraphMinX);
+        Graph.getViewport().setMaxX(GraphMaxX);
+        Graph.getViewport().setYAxisBoundsManual(true);
+        Graph.getViewport().setMinY(GraphMinY);
+        Graph.getViewport().setMaxY(GraphMaxY);
 
-        pressureGraph = (GraphView)findViewById(R.id.pressureGraph);
-        pressureSeries = new LineGraphSeries<>(new DataPoint[]{});
-        pressureGraph.addSeries(pressureSeries);
-        pressureGraph.getViewport().setXAxisBoundsManual(true);
-        pressureGraph.getViewport().setMinX(pressureGraphMinX);
-        pressureGraph.getViewport().setMaxX(pressureGraphMaxX);
-        pressureGraph.getViewport().setYAxisBoundsManual(true);
-        pressureGraph.getViewport().setMinY(pressureGraphMinY);
-        pressureGraph.getViewport().setMaxY(pressureGraphMaxY);
-
-        humidityGraph = (GraphView)findViewById(R.id.humidityGraph);
-        humiditySeries = new LineGraphSeries<>(new DataPoint[]{});
-        humidityGraph.addSeries(humiditySeries);
-        humidityGraph.getViewport().setXAxisBoundsManual(true);
-        humidityGraph.getViewport().setMinX(humidityGraphMinX);
-        humidityGraph.getViewport().setMaxX(humidityGraphMaxX);
-        humidityGraph.getViewport().setYAxisBoundsManual(true);
-        humidityGraph.getViewport().setMinY(humidityGraphMinY);
-        humidityGraph.getViewport().setMaxY(humidityGraphMaxY);
-
-        /* END initialize Graphs */
+        /* END initialize Graph */
 
         /* BEGIN config alter dialog */
-        configAlterDialog = new AlertDialog.Builder(Chart3.this);
+        configAlterDialog = new AlertDialog.Builder(Chart1.this);
         configAlterDialog.setTitle("This will STOP data acquisition. Proceed?");
         configAlterDialog.setIcon(android.R.drawable.ic_dialog_alert);
         configAlterDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -155,10 +115,10 @@ public class Chart3 extends AppCompatActivity {
             }
         });
         /* END config alter dialog */
-    /* END initialize widgets */
+        /* END initialize widgets */
 
         // Initialize Volley request queue
-        queue = Volley.newRequestQueue(Chart3.this);
+        queue = Volley.newRequestQueue(Chart1.this);
     }
 
     @Override
@@ -166,12 +126,12 @@ public class Chart3 extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, dataIntent);
         //if ((requestCode == COMMON.REQUEST_CODE_CONFIG) && (resultCode == RESULT_OK)) {
 
-            // IoT server IP address
-            textViewIP.setText(getIpAddressDisplayText(ipAddress));
+        // IoT server IP address
+        textViewIP.setText(getIpAddressDisplayText(ipAddress));
 
-            // Sample time (ms)
-            textViewSampleTime.setText(getSampleTimeDisplayText(Integer.toString(sampleTime)));
-        }
+        // Sample time (ms)
+        textViewSampleTime.setText(getSampleTimeDisplayText(Integer.toString(sampleTime)));
+    }
 
     /**
      * @brief Main activity button onClick procedure - common for all upper menu buttons
@@ -256,7 +216,7 @@ public class Chart3 extends AppCompatActivity {
      * @brief Called when the user taps the 'Config' button.
      * */
     private void openConfig() {
-        startActivity(new Intent(Chart3.this, ChartConfig.class));
+        startActivity(new Intent(Chart1.this, MainConfig.class));
     }
 
     private double getTemperatureFromResponse(String response) {
@@ -439,20 +399,17 @@ public class Chart3 extends AppCompatActivity {
 
             // update chart
             if (isNaN(temperature)||isNaN(humidity)||isNaN(pressure)) {
-               errorHandling(COMMON.ERROR_NAN_DATA);
+                errorHandling(COMMON.ERROR_NAN_DATA);
 
             } else {
 
                 // update plot series
                 double timeStamp = requestTimerTimeStamp / 1000.0; // [sec]
-                boolean scrollGraph = (timeStamp > temperatureGraphMaxX);
-                temperatureSeries.appendData(new DataPoint(timeStamp, temperature), scrollGraph, temperatureGraphMaxDataPointsNumber);
-                humiditySeries.appendData(new DataPoint(timeStamp, humidity), scrollGraph,humidityGraphMaxDataPointsNumber);
-                pressureSeries.appendData(new DataPoint(timeStamp, pressure), scrollGraph, pressureGraphMaxDataPointsNumber);
+                boolean scrollGraph = (timeStamp > GraphMaxX);
+                Series.appendData(new DataPoint(timeStamp, temperature), scrollGraph, GraphMaxDataPointsNumber);
+
                 // refresh chart
-                temperatureGraph.onDataChanged(true, true);
-                pressureGraph.onDataChanged(true, true);
-                humidityGraph.onDataChanged(true, true);
+                Graph.onDataChanged(true, true);
             }
 
             // remember previous time stamp

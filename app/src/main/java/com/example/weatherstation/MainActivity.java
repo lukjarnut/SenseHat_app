@@ -5,8 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -19,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
 
-        setContentView(R.layout.activity_menu);
+        setContentView(R.layout.menu);
     }
 
     public void btns_onClick(View v) {
@@ -28,10 +26,10 @@ public class MainActivity extends AppCompatActivity {
                 openCharts();
                 break;
             }
-//            case R.id.ledbtn: {
+//          case R.id.ledbtn: {
 //
 //                break;
-//            }
+//          }
             case R.id.settings_button: {
                 openConfig();
                 break;
@@ -43,25 +41,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openConfig() {
-        Intent openConfigIntent = new Intent(this, ConfigActivity.class);
-        Bundle configBundle = new Bundle();
-        configBundle.putString(COMMON.CONFIG_IP_ADDRESS, ipAddress);
-        configBundle.putInt(COMMON.CONFIG_SAMPLE_TIME, sampleTime);
-        openConfigIntent.putExtras(configBundle);
-        startActivityForResult(openConfigIntent, COMMON.REQUEST_CODE_CONFIG);
+        startActivity(new Intent(MainActivity.this, MainConfig.class));
     }
 
     private void openCharts() {
-        Button button_data = (Button) findViewById(R.id.chart_button);
-        Intent intent = new Intent();
-        intent.putExtra(COMMON.IP_ADDRESS);
-        intent.putExtra(COMMON.CONFIG_SAMPLE_TIME);
-        setResult(RESULT_OK, intent);
-        button_data.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        switch (COMMON.NO_CHARTS) {
+            case 1:
+                startActivity(new Intent(MainActivity.this, Chart1.class));
+                break;
+            case 2:
+                startActivity(new Intent(MainActivity.this, Chart2.class));
+                break;
+            case 3:
                 startActivity(new Intent(MainActivity.this, Chart3.class));
-            }
-        });
+                break;
+        }
     }
 }

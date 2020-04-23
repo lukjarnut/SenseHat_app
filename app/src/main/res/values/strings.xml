@@ -13,4 +13,6 @@
     <string name="ChartBtn">Charts</string>
     <string name="LEDBtn">LED Matrix</string>
     <string name="SettingsBtn">Settings</string>
+
+    <string name="Chart_config">Select graphs to show</string>
 </resources>

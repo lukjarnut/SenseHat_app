@@ -31,7 +31,7 @@ import java.util.TimerTask;
 
 import static java.lang.Double.isNaN;
 
-public class Chart3 extends AppCompatActivity {
+public class Chart2 extends AppCompatActivity {
 
     /* BEGIN config data */
     private String ipAddress = COMMON.CONFIG_IP_ADDRESS;
@@ -91,7 +91,7 @@ public class Chart3 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chart_3);
 
-    /* BEGIN initialize widgets */
+        /* BEGIN initialize widgets */
         /* BEGIN initialize TextViews */
         textViewIP = findViewById(R.id.textViewIP);
         textViewIP.setText(getIpAddressDisplayText(ipAddress));
@@ -140,7 +140,7 @@ public class Chart3 extends AppCompatActivity {
         /* END initialize Graphs */
 
         /* BEGIN config alter dialog */
-        configAlterDialog = new AlertDialog.Builder(Chart3.this);
+        configAlterDialog = new AlertDialog.Builder(Chart2.this);
         configAlterDialog.setTitle("This will STOP data acquisition. Proceed?");
         configAlterDialog.setIcon(android.R.drawable.ic_dialog_alert);
         configAlterDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -155,10 +155,10 @@ public class Chart3 extends AppCompatActivity {
             }
         });
         /* END config alter dialog */
-    /* END initialize widgets */
+        /* END initialize widgets */
 
         // Initialize Volley request queue
-        queue = Volley.newRequestQueue(Chart3.this);
+        queue = Volley.newRequestQueue(Chart2.this);
     }
 
     @Override
@@ -166,12 +166,12 @@ public class Chart3 extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, dataIntent);
         //if ((requestCode == COMMON.REQUEST_CODE_CONFIG) && (resultCode == RESULT_OK)) {
 
-            // IoT server IP address
-            textViewIP.setText(getIpAddressDisplayText(ipAddress));
+        // IoT server IP address
+        textViewIP.setText(getIpAddressDisplayText(ipAddress));
 
-            // Sample time (ms)
-            textViewSampleTime.setText(getSampleTimeDisplayText(Integer.toString(sampleTime)));
-        }
+        // Sample time (ms)
+        textViewSampleTime.setText(getSampleTimeDisplayText(Integer.toString(sampleTime)));
+    }
 
     /**
      * @brief Main activity button onClick procedure - common for all upper menu buttons
@@ -256,7 +256,7 @@ public class Chart3 extends AppCompatActivity {
      * @brief Called when the user taps the 'Config' button.
      * */
     private void openConfig() {
-        startActivity(new Intent(Chart3.this, ChartConfig.class));
+        startActivity(new Intent(Chart2.this, MainConfig.class));
     }
 
     private double getTemperatureFromResponse(String response) {
@@ -439,7 +439,7 @@ public class Chart3 extends AppCompatActivity {
 
             // update chart
             if (isNaN(temperature)||isNaN(humidity)||isNaN(pressure)) {
-               errorHandling(COMMON.ERROR_NAN_DATA);
+                errorHandling(COMMON.ERROR_NAN_DATA);
 
             } else {
 
