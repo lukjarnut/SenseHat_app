@@ -172,7 +172,11 @@ public class Chart3 extends AppCompatActivity {
             // Sample time (ms)
             textViewSampleTime.setText(getSampleTimeDisplayText(Integer.toString(sampleTime)));
         }
-
+    @Override
+    protected void onStart() {
+        super.onStart();
+        textViewSampleTime.setText(getSampleTimeDisplayText(Integer.toString(sampleTime)));
+    }
     /**
      * @brief Main activity button onClick procedure - common for all upper menu buttons
      * @param v the View (Button) that was clicked
@@ -335,7 +339,7 @@ public class Chart3 extends AppCompatActivity {
 
             // initialize the TimerTask's job
             initializeRequestTimerTask();
-            requestTimer.schedule(requestTimerTask, 0, COMMON.DEFAULT_SAMPLE_TIME);
+            requestTimer.schedule(requestTimerTask, 0, COMMON.CONFIG_SAMPLE_TIME);
 
             // clear error message
             textViewError.setText("");
@@ -408,8 +412,8 @@ public class Chart3 extends AppCompatActivity {
         // to avoid "holes" in the plot
         if(requestTimerFirstRequestAfterStop)
         {
-            if((currentTime - requestTimerPreviousTime) > COMMON.DEFAULT_SAMPLE_TIME)
-                requestTimerPreviousTime = currentTime - COMMON.DEFAULT_SAMPLE_TIME;
+            if((currentTime - requestTimerPreviousTime) > COMMON.CONFIG_SAMPLE_TIME)
+                requestTimerPreviousTime = currentTime - COMMON.CONFIG_SAMPLE_TIME;
 
             requestTimerFirstRequestAfterStop = false;
         }
@@ -417,7 +421,7 @@ public class Chart3 extends AppCompatActivity {
         // If time difference is equal zero after start
         // return sample time
         if((currentTime - requestTimerPreviousTime) == 0)
-            return COMMON.DEFAULT_SAMPLE_TIME;
+            return COMMON.CONFIG_SAMPLE_TIME;
 
         // Return time difference between current and previous request
         return (currentTime - requestTimerPreviousTime);

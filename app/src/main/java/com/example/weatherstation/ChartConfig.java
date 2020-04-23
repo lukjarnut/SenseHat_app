@@ -23,6 +23,7 @@ public class ChartConfig extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         COMMON.CONFIG_SAMPLE_TIME = Integer.parseInt(sampleTimeEditText.getText().toString());
+        //startActivity(new Intent(ChartConfig.this, Chart3.class));
         finish();
     }
 }
