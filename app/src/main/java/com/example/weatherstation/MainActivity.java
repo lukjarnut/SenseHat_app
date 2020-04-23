@@ -6,25 +6,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    private String ipAddress = COMMON.DEFAULT_IP_ADDRESS;
-    private int sampleTime = COMMON.DEFAULT_SAMPLE_TIME;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         setContentView(R.layout.activity_menu);
     }
 
     public void btns_onClick(View v) {
         switch (v.getId()) {
-            case R.id.chart_button: {
+            case R.id.chartBtn: {
                 openCharts();
                 break;
             }
@@ -32,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 //
 //                break;
 //            }
-            case R.id.settings_button: {
+            case R.id.settingsbtn: {
                 openConfig();
                 break;
             }
@@ -45,18 +39,14 @@ public class MainActivity extends AppCompatActivity {
     private void openConfig() {
         Intent openConfigIntent = new Intent(this, ConfigActivity.class);
         Bundle configBundle = new Bundle();
-        configBundle.putString(COMMON.CONFIG_IP_ADDRESS, ipAddress);
-        configBundle.putInt(COMMON.CONFIG_SAMPLE_TIME, sampleTime);
+        //configBundle.putString(COMMON.CONFIG_IP_ADDRESS, ipAddress);
+        //configBundle.putInt(COMMON.CONFIG_SAMPLE_TIME, sampleTime);
         openConfigIntent.putExtras(configBundle);
         startActivityForResult(openConfigIntent, COMMON.REQUEST_CODE_CONFIG);
     }
 
     private void openCharts() {
-        Button button_data = (Button) findViewById(R.id.chart_button);
-        Intent intent = new Intent();
-        intent.putExtra(COMMON.IP_ADDRESS);
-        intent.putExtra(COMMON.CONFIG_SAMPLE_TIME);
-        setResult(RESULT_OK, intent);
+        Button button_data = (Button) findViewById(R.id.chartbtn);
         button_data.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

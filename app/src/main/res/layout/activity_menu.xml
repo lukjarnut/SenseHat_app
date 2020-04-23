@@ -20,7 +20,7 @@
             android:layout_height="200dp"
             android:layout_weight="1" />
         <Button
-            android:id="@+id/chart_button"
+            android:id="@+id/chartbtn"
             android:layout_width="229dp"
             android:layout_height="64dp"
             style="@style/Widget.AppCompat.Button.Colored"
@@ -34,7 +34,7 @@
             android:layout_weight="1" />
 
         <Button
-            android:id="@+id/led_button"
+            android:id="@+id/ledbtn"
             android:layout_width="229dp"
             android:layout_height="64dp"
             style="@style/Widget.AppCompat.Button.Colored"
@@ -48,7 +48,7 @@
             android:layout_weight="1" />
 
         <Button
-            android:id="@+id/settings_button"
+            android:id="@+id/settingsbtn"
             android:layout_width="229dp"
             android:layout_height="64dp"
             style="@style/Widget.AppCompat.Button.Colored"

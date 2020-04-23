@@ -1,3 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <item name="chartBtn" type="id" />
+    <item name="SettingsBtn" type="id" />
 </resources>

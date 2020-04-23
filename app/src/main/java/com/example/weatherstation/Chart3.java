@@ -2,7 +2,6 @@ package com.example.weatherstation;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -85,7 +84,6 @@ public class Chart3 extends AppCompatActivity {
     private final Handler handler = new Handler();
     /* END request timer */
 
-    @SuppressLint("CutPasteId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
