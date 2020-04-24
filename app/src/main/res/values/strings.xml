@@ -15,4 +15,6 @@
     <string name="SettingsBtn">Settings</string>
 
     <string name="Chart_config">Select graphs to show</string>
+
+    <string name="Dialog_Text">Choose at least one parameter</string>
 </resources>
