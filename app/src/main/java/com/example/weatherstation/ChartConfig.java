@@ -13,7 +13,7 @@ public class ChartConfig extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chart_config);
+        setContentView(R.layout.chart_config);
 
         sampleTimeEditText = findViewById(R.id.sampleTimeEditTextConfig);
         int st = COMMON.CONFIG_SAMPLE_TIME;
@@ -23,7 +23,7 @@ public class ChartConfig extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         COMMON.CONFIG_SAMPLE_TIME = Integer.parseInt(sampleTimeEditText.getText().toString());
-        //startActivity(new Intent(ChartConfig.this, Chart3.class));
+        startActivity(new Intent(ChartConfig.this, Chart3.class));
         finish();
     }
 }
