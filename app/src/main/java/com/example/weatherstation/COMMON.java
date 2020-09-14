@@ -17,6 +17,8 @@ public class COMMON {
     public final static int ERROR_NAN_DATA = -2;
     public final static int ERROR_RESPONSE = -3;
 
+
+
     // IoT server data
     public final static String FILE_NAME = "/sense_hat/sense_joy.php?t=c&h=%&p=hpa";
 }

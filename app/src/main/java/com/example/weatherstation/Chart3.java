@@ -61,7 +61,6 @@ public class Chart3 extends AppCompatActivity {
     private final double pressureGraphMinX = 0.0d;
     private final double pressureGraphMaxY = 1260.0d;
     private final double pressureGraphMinY = 260.0d;
-    private AlertDialog.Builder configAlterDialog2;
 
     /* Humidity */
     private GraphView humidityGraph;
@@ -71,7 +70,6 @@ public class Chart3 extends AppCompatActivity {
     private final double humidityGraphMinX = 0.0d;
     private final double humidityGraphMaxY = 100.0d;
     private final double humidityGraphMinY = 0.0d;
-    private AlertDialog.Builder configAlterDialog3;
     /* END widgets */
 
     /* BEGIN request timer */
@@ -176,6 +174,11 @@ public class Chart3 extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         textViewSampleTime.setText(getSampleTimeDisplayText(Integer.toString(sampleTime)));
+    }
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(Chart3.this, MainActivity.class));
+        finish();
     }
     /**
      * @brief Main activity button onClick procedure - common for all upper menu buttons
@@ -398,8 +401,7 @@ public class Chart3 extends AppCompatActivity {
     /**
      * @brief Validation of client-side time stamp based on 'SystemClock'.
      */
-    private long getValidTimeStampIncrease(long currentTime)
-    {
+    private long getValidTimeStampIncrease(long currentTime) {
         // Right after start remember current time and return 0
         if(requestTimerFirstRequest)
         {

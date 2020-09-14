@@ -35,6 +35,7 @@
             android:checked="true"
             android:padding="@dimen/Chart_settings_padding"
             android:text="@string/temperatureText"
+            android:textOff="OFF"
             android:textSize="@dimen/Chart_settings_font_size"/>
 
         <Switch

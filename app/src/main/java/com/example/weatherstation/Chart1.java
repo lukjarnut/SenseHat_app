@@ -43,7 +43,7 @@ public class Chart1 extends AppCompatActivity {
     private TextView textViewSampleTime;
     private TextView textViewError;
 
-    private GraphView Graph;
+    private GraphView Graphview;
     private LineGraphSeries<DataPoint> Series;
     private final int GraphMaxDataPointsNumber = 1000;
     private final double GraphMaxX = 10.0d;
@@ -69,7 +69,7 @@ public class Chart1 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.chart_3);
+        setContentView(R.layout.chart_1);
 
         /* BEGIN initialize widgets */
         /* BEGIN initialize TextViews */
@@ -87,15 +87,15 @@ public class Chart1 extends AppCompatActivity {
         // https://github.com/jjoe64/GraphView/wiki
         final TextView textView = (TextView) findViewById(R.id.pressureLabel);
 
-        Graph = (GraphView)findViewById(R.id.temperatureGraph);
+        Graphview = (GraphView)findViewById(R.id.firstGraph);
         Series = new LineGraphSeries<>(new DataPoint[]{});
-        Graph.addSeries(Series);
-        Graph.getViewport().setXAxisBoundsManual(true);
-        Graph.getViewport().setMinX(GraphMinX);
-        Graph.getViewport().setMaxX(GraphMaxX);
-        Graph.getViewport().setYAxisBoundsManual(true);
-        Graph.getViewport().setMinY(GraphMinY);
-        Graph.getViewport().setMaxY(GraphMaxY);
+        Graphview.addSeries(Series);
+        Graphview.getViewport().setXAxisBoundsManual(true);
+        Graphview.getViewport().setMinX(GraphMinX);
+        Graphview.getViewport().setMaxX(GraphMaxX);
+        Graphview.getViewport().setYAxisBoundsManual(true);
+        Graphview.getViewport().setMinY(GraphMinY);
+        Graphview.getViewport().setMaxY(GraphMaxY);
 
         /* END initialize Graph */
 
@@ -216,7 +216,7 @@ public class Chart1 extends AppCompatActivity {
      * @brief Called when the user taps the 'Config' button.
      * */
     private void openConfig() {
-        startActivity(new Intent(Chart1.this, MainConfig.class));
+        startActivity(new Intent(Chart1.this, ChartConfig.class));
     }
 
     private double getTemperatureFromResponse(String response) {
@@ -409,7 +409,7 @@ public class Chart1 extends AppCompatActivity {
                 Series.appendData(new DataPoint(timeStamp, temperature), scrollGraph, GraphMaxDataPointsNumber);
 
                 // refresh chart
-                Graph.onDataChanged(true, true);
+                Graphview.onDataChanged(true, true);
             }
 
             // remember previous time stamp
