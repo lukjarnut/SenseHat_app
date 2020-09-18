@@ -30,10 +30,22 @@ public class ChartConfig extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chart_config);
 
+        Temperature_boolean = getIntent().getBooleanExtra("Temperature", true);
+        Pressure_boolean = getIntent().getBooleanExtra("Pressure", true);
+        Humidity_boolean = getIntent().getBooleanExtra("Humidity", true);
+
         Temperature_switch = (Switch)findViewById(R.id.TemperatureSW);
         Pressure_switch = (Switch)findViewById(R.id.PressureSW);
         Humidity_switch = (Switch)findViewById(R.id.HumiditySW);
 
+        if(Temperature_boolean) { Temperature_switch.setChecked(true); }
+        else { Temperature_switch.setChecked(false); }
+
+        if(Pressure_boolean) { Pressure_switch.setChecked(true); }
+        else { Pressure_switch.setChecked(false); }
+
+        if(Humidity_boolean) { Humidity_switch.setChecked(true); }
+        else { Humidity_switch.setChecked(false); }
 
         sampleTimeEditText = findViewById(R.id.sampleTimeEditTextConfig);
         int st = COMMON.CONFIG_SAMPLE_TIME;
@@ -61,11 +73,19 @@ public class ChartConfig extends AppCompatActivity {
                 configAlterDialog.show();
                 break;
             case 1:
-                startActivity(new Intent(ChartConfig.this, Chart1.class));
+                Intent intent_1 = new Intent(getBaseContext(), Chart1.class);
+                intent_1.putExtra("Temperature", Temperature_boolean);
+                intent_1.putExtra("Pressure", Pressure_boolean);
+                intent_1.putExtra("Humidity", Humidity_boolean);
+                startActivity(intent_1);
                 finish();
                 break;
             case 2:
-                startActivity(new Intent(ChartConfig.this, Chart2.class));
+                Intent intent_2 = new Intent(getBaseContext(), Chart2.class);
+                intent_2.putExtra("Temperature", Temperature_boolean);
+                intent_2.putExtra("Pressure", Pressure_boolean);
+                intent_2.putExtra("Humidity", Humidity_boolean);
+                startActivity(intent_2);
                 finish();
                 break;
             case 3:

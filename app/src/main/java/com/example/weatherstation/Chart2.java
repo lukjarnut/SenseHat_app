@@ -36,6 +36,10 @@ public class Chart2 extends AppCompatActivity {
     /* BEGIN config data */
     private String ipAddress = COMMON.CONFIG_IP_ADDRESS;
     private int sampleTime = COMMON.CONFIG_SAMPLE_TIME;
+
+    boolean Temperature_intent;
+    boolean Pressure_intent;
+    boolean Humidity_intent;
     /* END config data */
 
     /* BEGIN widgets */
@@ -43,24 +47,43 @@ public class Chart2 extends AppCompatActivity {
     private TextView textViewSampleTime;
     private TextView textViewError;
 
+    /* Temperature */
+    private final double temperatureGraphMaxX = 10.0d;
+    private final double temperatureGraphMinX = 0.0d;
+    private final double temperatureGraphMaxY = 110.0d;
+    private final double temperatureGraphMinY = -30.0d;
+
+    /* Pressure */
+    private final double pressureGraphMaxX = 10.0d;
+    private final double pressureGraphMinX = 0.0d;
+    private final double pressureGraphMaxY = 1260.0d;
+    private final double pressureGraphMinY = 260.0d;
+
+    /* Humidity */
+    private final double humidityGraphMaxX = 10.0d;
+    private final double humidityGraphMinX = 0.0d;
+    private final double humidityGraphMaxY = 100.0d;
+    private final double humidityGraphMinY = 0.0d;
+    /* END widgets */
+
     /* First Graph */
     private GraphView firstGraphview;
     private LineGraphSeries<DataPoint> firstSeries;
     private final int firstGraphMaxDataPointsNumber = 1000;
-    private final double firstGraphMaxX = 10.0d;
-    private final double firstGraphMinX = 0.0d;
-    private final double firstGraphMaxY = 110.0d;
-    private final double firstGraphMinY = -30.0d;
+    private double firstGraphMaxX = 10.0d;
+    private double firstGraphMinX = 0.0d;
+    private double firstGraphMaxY = 110.0d;
+    private double firstGraphMinY = -30.0d;
     private AlertDialog.Builder configAlterDialog;
 
     /* Second Graph */
     private GraphView secondGraphwiev;
     private LineGraphSeries<DataPoint> secondSeries;
     private final int secondGraphMaxDataPointsNumber = 1000;
-    private final double secondGraphMaxX = 10.0d;
-    private final double secondGraphMinX = 0.0d;
-    private final double secondGraphMaxY = 1260.0d;
-    private final double secondGraphMinY = 260.0d;
+    private double secondGraphMaxX = 10.0d;
+    private double secondGraphMinX = 0.0d;
+    private double secondGraphMaxY = 1260.0d;
+    private double secondGraphMinY = 260.0d;
     private AlertDialog.Builder configAlterDialog2;
 
     /* END widgets */
@@ -80,7 +103,51 @@ public class Chart2 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Temperature_intent = getIntent().getBooleanExtra("Temperature", true);
+        Pressure_intent = getIntent().getBooleanExtra("Pressure", true);
+        Humidity_intent = getIntent().getBooleanExtra("Humidity", true);
+
         setContentView(R.layout.chart_2);
+        TextView Label1 = (TextView)findViewById(R.id.Label1);
+        TextView Label2 = (TextView)findViewById(R.id.Label2);
+
+        if (Temperature_intent) {
+            firstGraphMaxX = temperatureGraphMaxX;
+            firstGraphMinX = temperatureGraphMinX;
+            firstGraphMaxY = temperatureGraphMaxY;
+            firstGraphMinY = temperatureGraphMinY;
+
+            if(Pressure_intent) {
+                Label2.setText("Pressure");
+
+                secondGraphMaxX = pressureGraphMaxX;
+                secondGraphMinX = pressureGraphMinX;
+                secondGraphMaxY = pressureGraphMaxY;
+                secondGraphMinY = pressureGraphMinY;
+            }
+            else {
+                Label2.setText("Humidity");
+
+                secondGraphMaxX = humidityGraphMaxX;
+                secondGraphMinX = humidityGraphMinX;
+                secondGraphMaxY = humidityGraphMaxY;
+                secondGraphMinY = humidityGraphMinY;
+            }
+        }
+        else {
+            Label1.setText("Pressure");
+            Label2.setText("Humidity");
+
+            firstGraphMaxX = pressureGraphMaxX;
+            firstGraphMinX = pressureGraphMinX;
+            firstGraphMaxY = pressureGraphMaxY;
+            firstGraphMinY = pressureGraphMinY;
+
+            secondGraphMaxX = humidityGraphMaxX;
+            secondGraphMinX = humidityGraphMinX;
+            secondGraphMaxY = humidityGraphMaxY;
+            secondGraphMinY = humidityGraphMinY;
+        }
 
         /* BEGIN initialize widgets */
         /* BEGIN initialize TextViews */
@@ -238,7 +305,11 @@ public class Chart2 extends AppCompatActivity {
      * @brief Called when the user taps the 'Config' button.
      * */
     private void openConfig() {
-        startActivity(new Intent(Chart2.this, ChartConfig.class));
+        Intent intent = new Intent(getBaseContext(), ChartConfig.class);
+        intent.putExtra("Temperature", Temperature_intent);
+        intent.putExtra("Pressure", Pressure_intent);
+        intent.putExtra("Humidity", Humidity_intent);
+        startActivity(intent);
     }
 
     private double getTemperatureFromResponse(String response) {
@@ -353,8 +424,7 @@ public class Chart2 extends AppCompatActivity {
     /**
      * @brief Sending GET request to IoT server using 'Volley'.
      */
-    private void sendGetRequest()
-    {
+    private void sendGetRequest() {
         // Instantiate the RequestQueue with Volley
         // https://javadoc.io/doc/com.android.volley/volley/1.1.0-rc2/index.html
         String url = getURL(ipAddress);
@@ -376,8 +446,7 @@ public class Chart2 extends AppCompatActivity {
     /**
      * @brief Validation of client-side time stamp based on 'SystemClock'.
      */
-    private long getValidTimeStampIncrease(long currentTime)
-    {
+    private long getValidTimeStampIncrease(long currentTime) {
         // Right after start remember current time and return 0
         if(requestTimerFirstRequest)
         {
@@ -428,8 +497,21 @@ public class Chart2 extends AppCompatActivity {
                 // update plot series
                 double timeStamp = requestTimerTimeStamp / 1000.0; // [sec]
                 boolean scrollGraph = (timeStamp > firstGraphMaxX);
-                firstSeries.appendData(new DataPoint(timeStamp, temperature), scrollGraph, firstGraphMaxDataPointsNumber);
-                secondSeries.appendData(new DataPoint(timeStamp, pressure), scrollGraph, secondGraphMaxDataPointsNumber);
+                if(Temperature_intent) {
+                    firstSeries.appendData(new DataPoint(timeStamp, temperature), scrollGraph, firstGraphMaxDataPointsNumber);
+                    if(Pressure_intent) {
+                        secondSeries.appendData(new DataPoint(timeStamp, pressure), scrollGraph, secondGraphMaxDataPointsNumber);
+                    }
+                    else {
+                        secondSeries.appendData(new DataPoint(timeStamp, humidity), scrollGraph, secondGraphMaxDataPointsNumber);
+                    }
+                }
+                else{
+                    firstSeries.appendData(new DataPoint(timeStamp, pressure), scrollGraph, secondGraphMaxDataPointsNumber);
+                    secondSeries.appendData(new DataPoint(timeStamp, humidity), scrollGraph, secondGraphMaxDataPointsNumber);
+                }
+
+
                 // refresh chart
                 firstGraphview.onDataChanged(true, true);
                 secondGraphwiev.onDataChanged(true, true);

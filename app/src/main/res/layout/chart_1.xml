@@ -116,14 +116,14 @@
 
         </LinearLayout>
         <TextView
-            android:id="@+id/firstLabel"
+            android:id="@+id/Label1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/Label1Text"/>
 
         <com.jjoe64.graphview.GraphView
-            android:id="@+id/firstGraph"
+            android:id="@+id/Graph1"
             android:layout_width="match_parent"
             android:layout_height="500dp" />
     </LinearLayout>

@@ -36,6 +36,10 @@ public class Chart1 extends AppCompatActivity {
     /* BEGIN config data */
     private String ipAddress = COMMON.CONFIG_IP_ADDRESS;
     private int sampleTime = COMMON.CONFIG_SAMPLE_TIME;
+
+    boolean Temperature_intent;
+    boolean Pressure_intent;
+    boolean Humidity_intent;
     /* END config data */
 
     /* BEGIN widgets */
@@ -43,13 +47,32 @@ public class Chart1 extends AppCompatActivity {
     private TextView textViewSampleTime;
     private TextView textViewError;
 
+    /* Temperature */
+    private final double temperatureGraphMaxX = 10.0d;
+    private final double temperatureGraphMinX = 0.0d;
+    private final double temperatureGraphMaxY = 110.0d;
+    private final double temperatureGraphMinY = -30.0d;
+
+    /* Pressure */
+    private final double pressureGraphMaxX = 10.0d;
+    private final double pressureGraphMinX = 0.0d;
+    private final double pressureGraphMaxY = 1260.0d;
+    private final double pressureGraphMinY = 260.0d;
+
+    /* Humidity */
+    private final double humidityGraphMaxX = 10.0d;
+    private final double humidityGraphMinX = 0.0d;
+    private final double humidityGraphMaxY = 100.0d;
+    private final double humidityGraphMinY = 0.0d;
+    /* END widgets */
+
     private GraphView Graphview;
     private LineGraphSeries<DataPoint> Series;
-    private final int GraphMaxDataPointsNumber = 1000;
-    private final double GraphMaxX = 10.0d;
-    private final double GraphMinX = 0.0d;
-    private final double GraphMaxY = 110.0d;
-    private final double GraphMinY = -30.0d;
+    private int GraphMaxDataPointsNumber = 1000;
+    private double GraphMaxX = 10.0d;
+    private double GraphMinX = 0.0d;
+    private double GraphMaxY = 110.0d;
+    private double GraphMinY = -30.0d;
     private AlertDialog.Builder configAlterDialog;
 
     /* END widgets */
@@ -69,7 +92,35 @@ public class Chart1 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Temperature_intent = getIntent().getBooleanExtra("Temperature", true);
+        Pressure_intent = getIntent().getBooleanExtra("Pressure", true);
+        Humidity_intent = getIntent().getBooleanExtra("Humidity", true);
+
         setContentView(R.layout.chart_1);
+        TextView Label1 = (TextView)findViewById(R.id.Label1);
+
+        if (Temperature_intent) {
+            Label1.setText("Temperature");
+            GraphMaxX = temperatureGraphMaxX;
+            GraphMinX = temperatureGraphMinX;
+            GraphMaxY = temperatureGraphMaxY;
+            GraphMinY = temperatureGraphMinY;
+        }
+        else if (Pressure_intent) {
+            Label1.setText("Pressure");
+            GraphMaxX = pressureGraphMaxX;
+            GraphMinX = pressureGraphMinX;
+            GraphMaxY = pressureGraphMaxY;
+            GraphMinY = pressureGraphMinY;
+        }
+        else {
+            Label1.setText("Humidity");
+            GraphMaxX = humidityGraphMaxX;
+            GraphMinX = humidityGraphMinX;
+            GraphMaxY = humidityGraphMaxY;
+            GraphMinY = humidityGraphMinY;
+        }
 
         /* BEGIN initialize widgets */
         /* BEGIN initialize TextViews */
@@ -87,7 +138,7 @@ public class Chart1 extends AppCompatActivity {
         // https://github.com/jjoe64/GraphView/wiki
         final TextView textView = (TextView) findViewById(R.id.pressureLabel);
 
-        Graphview = (GraphView)findViewById(R.id.firstGraph);
+        Graphview = (GraphView)findViewById(R.id.Graph1);
         Series = new LineGraphSeries<>(new DataPoint[]{});
         Graphview.addSeries(Series);
         Graphview.getViewport().setXAxisBoundsManual(true);
@@ -216,7 +267,11 @@ public class Chart1 extends AppCompatActivity {
      * @brief Called when the user taps the 'Config' button.
      * */
     private void openConfig() {
-        startActivity(new Intent(Chart1.this, ChartConfig.class));
+        Intent intent = new Intent(getBaseContext(), ChartConfig.class);
+        intent.putExtra("Temperature", Temperature_intent);
+        intent.putExtra("Pressure", Pressure_intent);
+        intent.putExtra("Humidity", Humidity_intent);
+        startActivity(intent);
     }
 
     private double getTemperatureFromResponse(String response) {
@@ -393,12 +448,20 @@ public class Chart1 extends AppCompatActivity {
             requestTimerTimeStamp += getValidTimeStampIncrease(requestTimerCurrentTime);
 
             // get raw data from JSON response
-            double temperature = getTemperatureFromResponse(response);
-            double humidity = getHumidityFromResponse(response);
-            double pressure = getPressureFromResponse(response);
+            double data;
+
+            if(Temperature_intent) {
+                data = getTemperatureFromResponse(response);
+            }
+            else if(Pressure_intent) {
+                data = getPressureFromResponse(response);
+            }
+            else {
+                data = getHumidityFromResponse(response);
+            }
 
             // update chart
-            if (isNaN(temperature)||isNaN(humidity)||isNaN(pressure)) {
+            if (isNaN(data)) {
                 errorHandling(COMMON.ERROR_NAN_DATA);
 
             } else {
@@ -406,7 +469,8 @@ public class Chart1 extends AppCompatActivity {
                 // update plot series
                 double timeStamp = requestTimerTimeStamp / 1000.0; // [sec]
                 boolean scrollGraph = (timeStamp > GraphMaxX);
-                Series.appendData(new DataPoint(timeStamp, temperature), scrollGraph, GraphMaxDataPointsNumber);
+
+                Series.appendData(new DataPoint(timeStamp, data), scrollGraph, GraphMaxDataPointsNumber);
 
                 // refresh chart
                 Graphview.onDataChanged(true, true);
