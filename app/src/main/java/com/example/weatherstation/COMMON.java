@@ -5,8 +5,8 @@ public class COMMON {
     public final static int REQUEST_CODE_CONFIG = 1;
 
     // configuration info: names and default values
-    public static String CONFIG_IP_ADDRESS = "192.168.1.15";
-    public final static String DEFAULT_IP_ADDRESS = "192.168.1.15";
+    public static String CONFIG_IP_ADDRESS = "192.168.1.70";
+    public final static String DEFAULT_IP_ADDRESS = "192.168.1.70";
 
     public static int CONFIG_SAMPLE_TIME = 500;
     public final static int DEFAULT_SAMPLE_TIME = 500;
@@ -20,5 +20,5 @@ public class COMMON {
 
 
     // IoT server data
-    public final static String FILE_NAME = "/sense_hat/sense_joy.php?t=c&h=%&p=hpa";
+    public final static String FILE_NAME = "sense_hat.json"; //"/sense_hat/sense_joy.php?t=c&h=%&p=hpa";
 }

@@ -16,7 +16,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         setContentView(R.layout.menu);
     }
 
@@ -38,6 +37,13 @@ public class MainActivity extends AppCompatActivity {
                 // do nothing
             }
         }
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        finish();
+        moveTaskToBack(true);
     }
 
     private void openConfig() {

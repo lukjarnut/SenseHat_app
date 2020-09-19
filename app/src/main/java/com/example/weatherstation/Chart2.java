@@ -249,6 +249,13 @@ public class Chart2 extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed()
+    {
+        startActivity(new Intent(Chart2.this, MainActivity.class));
+        finish();
+    }
+
     /**
      * @brief Create display text for IoT server IP address
      * @param ip IP address (string)
