@@ -25,6 +25,7 @@
         <activity android:name=".Chart1"></activity>
         <activity android:name=".Chart2"></activity>
         <activity android:name=".Chart3"></activity>
+        <activity android:name=".LED_Matrix"></activity>
     </application>
 
 </manifest>

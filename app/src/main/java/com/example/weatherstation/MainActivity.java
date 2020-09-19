@@ -25,10 +25,10 @@ public class MainActivity extends AppCompatActivity {
                 openCharts();
                 break;
             }
-//          case R.id.ledbtn: {
-//
-//                break;
-//          }
+          case R.id.led_button: {
+                openLED();
+                break;
+          }
             case R.id.settings_button: {
                 openConfig();
                 break;
@@ -49,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
     private void openConfig() {
         startActivity(new Intent(MainActivity.this, MainConfig.class));
     }
+
+    private void openLED() { startActivity(new Intent (MainActivity.this, LED_Matrix.class)); }
 
     private void openCharts() {
         switch (COMMON.NO_CHARTS) {
