@@ -46,10 +46,6 @@ public class ChartConfig extends AppCompatActivity {
         if(Humidity_boolean) { Humidity_switch.setChecked(true); }
         else { Humidity_switch.setChecked(false); }
 
-        sampleTimeEditText = findViewById(R.id.sampleTimeEditTextConfig);
-        int st = COMMON.CONFIG_SAMPLE_TIME;
-        sampleTimeEditText.setText(Integer.toString(st));
-
         /* BEGIN config alter dialog */
         configAlterDialog = new AlertDialog.Builder(ChartConfig.this);
         configAlterDialog.setTitle("No charts selected!");
@@ -65,7 +61,6 @@ public class ChartConfig extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        COMMON.CONFIG_SAMPLE_TIME = Integer.parseInt(sampleTimeEditText.getText().toString());
         int count = count();
         switch(count) {
             case 0:
@@ -110,11 +105,6 @@ public class ChartConfig extends AppCompatActivity {
             number_of_charts++;
         }
         return number_of_charts;
-    }
-
-    private void alert()
-    {
-
     }
 }
 

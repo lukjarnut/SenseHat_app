@@ -32,6 +32,11 @@ tools:context=".Joystick">
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.1">
 
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
         <Button
             android:id="@+id/startBtn"
             style="@style/Widget.AppCompat.Button.Colored"
@@ -50,6 +55,7 @@ tools:context=".Joystick">
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="right"
             android:onClick="btns_onClick"
             android:text="@string/stopBtnText" />
 
@@ -57,14 +63,6 @@ tools:context=".Joystick">
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="1" />
-
-        <Button
-            android:id="@+id/configBtn"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:onClick="btns_onClick"
-            android:text="@string/configBtnText" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/linearLayoutConfigText"

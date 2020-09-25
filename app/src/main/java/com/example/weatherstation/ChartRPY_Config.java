@@ -38,19 +38,16 @@ public class ChartRPY_Config extends AppCompatActivity {
         COMMON.CONFIG_SAMPLE_TIME = Integer.parseInt(sampleTimeEditText.getText().toString());
         if ( in == "ChartRPY" ) {
             startActivity(new Intent(this, ChartRPY.class));
-            finish();
         }
         if( in == "ChartJoy"){
-            startActivity(new Intent(this, Table.class));
-            finish();
+            startActivity(new Intent(this, Joystick.class));
         }
         if( in == "Table") {
             startActivity(new Intent(this, Table.class));
-            finish();
         }
         else{
-            finish();
         }
+        finish();
     }
 
 }

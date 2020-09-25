@@ -8,7 +8,9 @@ import android.widget.EditText;
 
 public class MainConfig extends AppCompatActivity {
 
+    /* BEGIN config textboxes */
     EditText ipEditText;
+    EditText sampleTimeEditText;
     /* END config textboxes */
 
     int count_views = 0;
@@ -21,10 +23,15 @@ public class MainConfig extends AppCompatActivity {
         String ip = COMMON.CONFIG_IP_ADDRESS;
         ipEditText.setText(ip);
 
+        sampleTimeEditText = findViewById(R.id.sampleTimeEditTextConfig);
+        int st = COMMON.CONFIG_SAMPLE_TIME;
+        sampleTimeEditText.setText(Integer.toString(st));
+
     }
     @Override
     public void onBackPressed() {
         COMMON.CONFIG_IP_ADDRESS = ipEditText.getText().toString();
+        COMMON.CONFIG_SAMPLE_TIME = Integer.parseInt(sampleTimeEditText.getText().toString());
 
         finish();
     }

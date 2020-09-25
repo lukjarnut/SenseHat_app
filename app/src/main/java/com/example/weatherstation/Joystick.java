@@ -161,13 +161,6 @@ public class Joystick extends AppCompatActivity {
      */
     public void btns_onClick(View v) {
         switch (v.getId()) {
-            case R.id.configBtn: {
-                if(requestTimer != null)
-                    configAlterDialog.show();
-                else
-                    openConfig();
-                break;
-            }
             case R.id.startBtn: {
                 startRequestTimer();
                 break;
