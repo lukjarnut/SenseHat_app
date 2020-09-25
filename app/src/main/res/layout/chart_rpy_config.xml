@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChartConfig">
+    tools:context=".ChartRPY_Config">
 
 
     <LinearLayout
@@ -20,42 +20,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/textViewIPConfig"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/Chart_config"
-            android:textSize="24sp" />
-
-        <Switch
-            android:id="@+id/TemperatureSW"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:checked="true"
-            android:padding="@dimen/Chart_settings_padding"
-            android:text="@string/temperatureText"
-            android:textSize="@dimen/Chart_settings_font_size"/>
-
-        <Switch
-            android:id="@+id/PressureSW"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:checked="true"
-            android:padding="@dimen/Chart_settings_padding"
-            android:text="@string/pressureText"
-            android:textSize="@dimen/Chart_settings_font_size"/>
-
-        <Switch
-            android:id="@+id/HumiditySW"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/Chart_settings_padding"
-            android:layout_gravity="center"
-            android:checked="true"
-            android:text="@string/humidityText"
-            android:textSize="@dimen/Chart_settings_font_size" />
 
         <TextView
             android:id="@+id/textViewSampleTimeConfig"

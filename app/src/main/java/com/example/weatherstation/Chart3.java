@@ -42,6 +42,7 @@ public class Chart3 extends AppCompatActivity {
     private TextView textViewIP;
     private TextView textViewSampleTime;
     private TextView textViewError;
+    private TextView temperatureLabel;
 
     /* Temperature */
     private GraphView temperatureGraph;
@@ -91,6 +92,10 @@ public class Chart3 extends AppCompatActivity {
 
     /* BEGIN initialize widgets */
         /* BEGIN initialize TextViews */
+        char tmp = 0x00B0;
+        temperatureLabel = findViewById(R.id.temperatureLabel);
+        String temp = (String) temperatureLabel.getText();
+        temperatureLabel.setText(temp + " (" + (char)0x00B0 + "C)");
         textViewIP = findViewById(R.id.textViewIP);
         textViewIP.setText(getIpAddressDisplayText(ipAddress));
 
@@ -181,7 +186,7 @@ public class Chart3 extends AppCompatActivity {
         finish();
     }
     /**
-     * @brief Main activity button onClick procedure - common for all upper menu buttons
+     * @brief Main activity button onClick procedure - common for all upper main_menu buttons
      * @param v the View (Button) that was clicked
      */
     public void btns_onClick(View v) {
@@ -280,8 +285,8 @@ public class Chart3 extends AppCompatActivity {
 
         // Read chart data form JSON object
         try {
-            JSONObject weatherStation = jObject.getJSONObject("WeatherStation");
-            reading = (double)weatherStation.get("temperature");
+            JSONObject data = jObject.getJSONObject("data").getJSONObject("TPH");
+            reading = (double)data.get("temperature");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -302,8 +307,8 @@ public class Chart3 extends AppCompatActivity {
 
         // Read chart data form JSON object
         try {
-            JSONObject weatherStation = jObject.getJSONObject("WeatherStation");
-            reading = (double)weatherStation.get("pressure");
+            JSONObject data = jObject.getJSONObject("data").getJSONObject("TPH");
+            reading = (double)data.get("pressure");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -324,8 +329,8 @@ public class Chart3 extends AppCompatActivity {
 
         // Read chart data form JSON object
         try {
-            JSONObject weatherStation = jObject.getJSONObject("WeatherStation");
-            reading = (double)weatherStation.get("humidity");
+            JSONObject data = jObject.getJSONObject("data").getJSONObject("TPH");
+            reading = (double)data.get("humidity");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -378,8 +383,7 @@ public class Chart3 extends AppCompatActivity {
     /**
      * @brief Sending GET request to IoT server using 'Volley'.
      */
-    private void sendGetRequest()
-    {
+    private void sendGetRequest() {
         // Instantiate the RequestQueue with Volley
         // https://javadoc.io/doc/com.android.volley/volley/1.1.0-rc2/index.html
         String url = getURL(ipAddress);

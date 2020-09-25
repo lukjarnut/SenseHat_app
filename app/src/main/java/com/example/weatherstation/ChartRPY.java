@@ -31,15 +31,11 @@ import java.util.TimerTask;
 
 import static java.lang.Double.isNaN;
 
-public class Chart1 extends AppCompatActivity {
+public class ChartRPY extends AppCompatActivity {
 
     /* BEGIN config data */
     private String ipAddress = COMMON.CONFIG_IP_ADDRESS;
     private int sampleTime = COMMON.CONFIG_SAMPLE_TIME;
-
-    boolean Temperature_intent;
-    boolean Pressure_intent;
-    boolean Humidity_intent;
     /* END config data */
 
     /* BEGIN widgets */
@@ -47,32 +43,18 @@ public class Chart1 extends AppCompatActivity {
     private TextView textViewSampleTime;
     private TextView textViewError;
 
-    /* Temperature */
-    private final double temperatureGraphMaxX = 10.0d;
-    private final double temperatureGraphMinX = 0.0d;
-    private final double temperatureGraphMaxY = 110.0d;
-    private final double temperatureGraphMinY = -30.0d;
-
-    /* Pressure */
-    private final double pressureGraphMaxX = 10.0d;
-    private final double pressureGraphMinX = 0.0d;
-    private final double pressureGraphMaxY = 1260.0d;
-    private final double pressureGraphMinY = 260.0d;
-
-    /* Humidity */
-    private final double humidityGraphMaxX = 10.0d;
-    private final double humidityGraphMinX = 0.0d;
-    private final double humidityGraphMaxY = 100.0d;
-    private final double humidityGraphMinY = 0.0d;
-    /* END widgets */
-
-    private GraphView Graphview;
-    private LineGraphSeries<DataPoint> Series;
-    private int GraphMaxDataPointsNumber = 1000;
-    private double GraphMaxX = 10.0d;
-    private double GraphMinX = 0.0d;
-    private double GraphMaxY = 110.0d;
-    private double GraphMinY = -30.0d;
+    /* Graphs */
+    private GraphView rollGraph;
+    private GraphView pitchGraph;
+    private GraphView yawGraph;
+    private LineGraphSeries<DataPoint> rollSeries;
+    private LineGraphSeries<DataPoint> pitchSeries;
+    private LineGraphSeries<DataPoint> yawSeries;
+    private final int GraphMaxDataPointsNumber = 1000;
+    private final double GraphMaxX = 180.0d;
+    private final double GraphMinX = 0.0d;
+    private final double GraphMaxY = 180.0d;
+    private final double GraphMinY = -180.0d;
     private AlertDialog.Builder configAlterDialog;
 
     /* END widgets */
@@ -92,35 +74,7 @@ public class Chart1 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Temperature_intent = getIntent().getBooleanExtra("Temperature", true);
-        Pressure_intent = getIntent().getBooleanExtra("Pressure", true);
-        Humidity_intent = getIntent().getBooleanExtra("Humidity", true);
-
-        setContentView(R.layout.chart_1);
-        TextView Label1 = (TextView)findViewById(R.id.Label1);
-
-        if (Temperature_intent) {
-            Label1.setText("Temperature + \" (\" + (char)0x00B0 + \"C)\"");
-            GraphMaxX = temperatureGraphMaxX;
-            GraphMinX = temperatureGraphMinX;
-            GraphMaxY = temperatureGraphMaxY;
-            GraphMinY = temperatureGraphMinY;
-        }
-        else if (Pressure_intent) {
-            Label1.setText("Pressure (hPa)");
-            GraphMaxX = pressureGraphMaxX;
-            GraphMinX = pressureGraphMinX;
-            GraphMaxY = pressureGraphMaxY;
-            GraphMinY = pressureGraphMinY;
-        }
-        else {
-            Label1.setText("Humidity (%)");
-            GraphMaxX = humidityGraphMaxX;
-            GraphMinX = humidityGraphMinX;
-            GraphMaxY = humidityGraphMaxY;
-            GraphMinY = humidityGraphMinY;
-        }
+        setContentView(R.layout.chart_rpy);
 
         /* BEGIN initialize widgets */
         /* BEGIN initialize TextViews */
@@ -134,24 +88,43 @@ public class Chart1 extends AppCompatActivity {
         textViewError.setText("");
         /* END initialize TextViews */
 
-        /* BEGIN initialize Graph */
+        /* BEGIN initialize Graphs */
         // https://github.com/jjoe64/GraphView/wiki
-        final TextView textView = (TextView) findViewById(R.id.pressureLabel);
 
-        Graphview = (GraphView)findViewById(R.id.Graph1);
-        Series = new LineGraphSeries<>(new DataPoint[]{});
-        Graphview.addSeries(Series);
-        Graphview.getViewport().setXAxisBoundsManual(true);
-        Graphview.getViewport().setMinX(GraphMinX);
-        Graphview.getViewport().setMaxX(GraphMaxX);
-        Graphview.getViewport().setYAxisBoundsManual(true);
-        Graphview.getViewport().setMinY(GraphMinY);
-        Graphview.getViewport().setMaxY(GraphMaxY);
+        rollGraph = (GraphView)findViewById(R.id.rollGraph);
+        rollSeries = new LineGraphSeries<>(new DataPoint[]{});
+        rollGraph.addSeries(rollSeries);
+        rollGraph.getViewport().setXAxisBoundsManual(true);
+        rollGraph.getViewport().setMinX(GraphMinX);
+        rollGraph.getViewport().setMaxX(GraphMaxX);
+        rollGraph.getViewport().setYAxisBoundsManual(true);
+        rollGraph.getViewport().setMinY(GraphMinY);
+        rollGraph.getViewport().setMaxY(GraphMaxY);
 
-        /* END initialize Graph */
+        pitchGraph = (GraphView)findViewById(R.id.pitchGraph);
+        pitchSeries = new LineGraphSeries<>(new DataPoint[]{});
+        pitchGraph.addSeries(pitchSeries);
+        pitchGraph.getViewport().setXAxisBoundsManual(true);
+        pitchGraph.getViewport().setMinX(GraphMinX);
+        pitchGraph.getViewport().setMaxX(GraphMaxX);
+        pitchGraph.getViewport().setYAxisBoundsManual(true);
+        pitchGraph.getViewport().setMinY(GraphMinY);
+        pitchGraph.getViewport().setMaxY(GraphMaxY);
+
+        yawGraph = (GraphView)findViewById(R.id.yawGraph);
+        yawSeries = new LineGraphSeries<>(new DataPoint[]{});
+        yawGraph.addSeries(yawSeries);
+        yawGraph.getViewport().setXAxisBoundsManual(true);
+        yawGraph.getViewport().setMinX(GraphMinX);
+        yawGraph.getViewport().setMaxX(GraphMaxX);
+        yawGraph.getViewport().setYAxisBoundsManual(true);
+        yawGraph.getViewport().setMinY(GraphMinY);
+        yawGraph.getViewport().setMaxY(GraphMaxY);
+
+        /* END initialize Graphs */
 
         /* BEGIN config alter dialog */
-        configAlterDialog = new AlertDialog.Builder(Chart1.this);
+        configAlterDialog = new AlertDialog.Builder(ChartRPY.this);
         configAlterDialog.setTitle("This will STOP data acquisition. Proceed?");
         configAlterDialog.setIcon(android.R.drawable.ic_dialog_alert);
         configAlterDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -169,7 +142,7 @@ public class Chart1 extends AppCompatActivity {
         /* END initialize widgets */
 
         // Initialize Volley request queue
-        queue = Volley.newRequestQueue(Chart1.this);
+        queue = Volley.newRequestQueue(ChartRPY.this);
     }
 
     @Override
@@ -183,7 +156,16 @@ public class Chart1 extends AppCompatActivity {
         // Sample time (ms)
         textViewSampleTime.setText(getSampleTimeDisplayText(Integer.toString(sampleTime)));
     }
-
+    @Override
+    protected void onStart() {
+        super.onStart();
+        textViewSampleTime.setText(getSampleTimeDisplayText(Integer.toString(sampleTime)));
+    }
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(ChartRPY.this, MainActivity.class));
+        finish();
+    }
     /**
      * @brief Main activity button onClick procedure - common for all upper main_menu buttons
      * @param v the View (Button) that was clicked
@@ -209,13 +191,6 @@ public class Chart1 extends AppCompatActivity {
                 // do nothing
             }
         }
-    }
-
-    @Override
-    public void onBackPressed()
-    {
-        startActivity(new Intent(Chart1.this, MainActivity.class));
-        finish();
     }
 
     /**
@@ -274,14 +249,13 @@ public class Chart1 extends AppCompatActivity {
      * @brief Called when the user taps the 'Config' button.
      * */
     private void openConfig() {
-        Intent intent = new Intent(getBaseContext(), ChartConfig.class);
-        intent.putExtra("Temperature", Temperature_intent);
-        intent.putExtra("Pressure", Pressure_intent);
-        intent.putExtra("Humidity", Humidity_intent);
+        Intent intent = new Intent(this, ChartRPY_Config.class);
+        String str = "ChartRPY";
+        intent.putExtra("Chart", str);
         startActivity(intent);
     }
 
-    private double getTemperatureFromResponse(String response) {
+    private double getRollFromResponse(String response) {
         JSONObject jObject;
         double reading = Float.NaN;
 
@@ -295,15 +269,15 @@ public class Chart1 extends AppCompatActivity {
 
         // Read chart data form JSON object
         try {
-            JSONObject data = jObject.getJSONObject("data").getJSONObject("TPH");
-            reading = (double)data.get("temperature");
+            JSONObject data = jObject.getJSONObject("data").getJSONObject("RPY");
+            reading = (double)data.get("roll");
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return reading;
     }
 
-    private double getPressureFromResponse(String response) {
+    private double getPitchFromResponse(String response) {
         JSONObject jObject;
         double reading = Float.NaN;
 
@@ -317,15 +291,15 @@ public class Chart1 extends AppCompatActivity {
 
         // Read chart data form JSON object
         try {
-            JSONObject data = jObject.getJSONObject("data").getJSONObject("TPH");
-            reading = (double)data.get("pressure");
+            JSONObject data = jObject.getJSONObject("data").getJSONObject("RPY");
+            reading = (double)data.get("pitch");
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return reading;
     }
 
-    private double getHumidityFromResponse(String response) {
+    private double getYawFromResponse(String response) {
         JSONObject jObject;
         double reading = Float.NaN;
 
@@ -339,8 +313,8 @@ public class Chart1 extends AppCompatActivity {
 
         // Read chart data form JSON object
         try {
-            JSONObject data = jObject.getJSONObject("data").getJSONObject("TPH");
-            reading = (double)data.get("humidity");
+            JSONObject data = jObject.getJSONObject("data").getJSONObject("RPY");
+            reading = (double)data.get("yaw");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -357,7 +331,7 @@ public class Chart1 extends AppCompatActivity {
 
             // initialize the TimerTask's job
             initializeRequestTimerTask();
-            requestTimer.schedule(requestTimerTask, 0, COMMON.DEFAULT_SAMPLE_TIME);
+            requestTimer.schedule(requestTimerTask, 0, COMMON.CONFIG_SAMPLE_TIME);
 
             // clear error message
             textViewError.setText("");
@@ -428,8 +402,8 @@ public class Chart1 extends AppCompatActivity {
         // to avoid "holes" in the plot
         if(requestTimerFirstRequestAfterStop)
         {
-            if((currentTime - requestTimerPreviousTime) > COMMON.DEFAULT_SAMPLE_TIME)
-                requestTimerPreviousTime = currentTime - COMMON.DEFAULT_SAMPLE_TIME;
+            if((currentTime - requestTimerPreviousTime) > COMMON.CONFIG_SAMPLE_TIME)
+                requestTimerPreviousTime = currentTime - COMMON.CONFIG_SAMPLE_TIME;
 
             requestTimerFirstRequestAfterStop = false;
         }
@@ -437,7 +411,7 @@ public class Chart1 extends AppCompatActivity {
         // If time difference is equal zero after start
         // return sample time
         if((currentTime - requestTimerPreviousTime) == 0)
-            return COMMON.DEFAULT_SAMPLE_TIME;
+            return COMMON.CONFIG_SAMPLE_TIME;
 
         // Return time difference between current and previous request
         return (currentTime - requestTimerPreviousTime);
@@ -453,20 +427,12 @@ public class Chart1 extends AppCompatActivity {
             requestTimerTimeStamp += getValidTimeStampIncrease(requestTimerCurrentTime);
 
             // get raw data from JSON response
-            double data;
-
-            if(Temperature_intent) {
-                data = getTemperatureFromResponse(response);
-            }
-            else if(Pressure_intent) {
-                data = getPressureFromResponse(response);
-            }
-            else {
-                data = getHumidityFromResponse(response);
-            }
+            double roll = getRollFromResponse(response);
+            double pitch = getPitchFromResponse(response);
+            double yaw = getYawFromResponse(response);
 
             // update chart
-            if (isNaN(data)) {
+            if (isNaN(roll)||isNaN(pitch)||isNaN(yaw)) {
                 errorHandling(COMMON.ERROR_NAN_DATA);
 
             } else {
@@ -474,11 +440,13 @@ public class Chart1 extends AppCompatActivity {
                 // update plot series
                 double timeStamp = requestTimerTimeStamp / 1000.0; // [sec]
                 boolean scrollGraph = (timeStamp > GraphMaxX);
-
-                Series.appendData(new DataPoint(timeStamp, data), scrollGraph, GraphMaxDataPointsNumber);
-
+                rollSeries.appendData(new DataPoint(timeStamp, roll), scrollGraph, GraphMaxDataPointsNumber);
+                pitchSeries.appendData(new DataPoint(timeStamp, pitch), scrollGraph,GraphMaxDataPointsNumber);
+                yawSeries.appendData(new DataPoint(timeStamp, yaw), scrollGraph, GraphMaxDataPointsNumber);
                 // refresh chart
-                Graphview.onDataChanged(true, true);
+                rollGraph.onDataChanged(true, true);
+                pitchGraph.onDataChanged(true, true);
+                yawGraph.onDataChanged(true, true);
             }
 
             // remember previous time stamp

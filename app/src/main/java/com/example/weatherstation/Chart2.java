@@ -118,7 +118,7 @@ public class Chart2 extends AppCompatActivity {
             firstGraphMinY = temperatureGraphMinY;
 
             if(Pressure_intent) {
-                Label2.setText("Pressure");
+                Label2.setText("Pressure (hPa)");
 
                 secondGraphMaxX = pressureGraphMaxX;
                 secondGraphMinX = pressureGraphMinX;
@@ -126,7 +126,7 @@ public class Chart2 extends AppCompatActivity {
                 secondGraphMinY = pressureGraphMinY;
             }
             else {
-                Label2.setText("Humidity");
+                Label2.setText("Humidity (%)");
 
                 secondGraphMaxX = humidityGraphMaxX;
                 secondGraphMinX = humidityGraphMinX;
@@ -135,8 +135,8 @@ public class Chart2 extends AppCompatActivity {
             }
         }
         else {
-            Label1.setText("Pressure");
-            Label2.setText("Humidity");
+            Label1.setText("Pressure (hPa)");
+            Label2.setText("Humidity (%)");
 
             firstGraphMaxX = pressureGraphMaxX;
             firstGraphMinX = pressureGraphMinX;
@@ -223,7 +223,7 @@ public class Chart2 extends AppCompatActivity {
     }
 
     /**
-     * @brief Main activity button onClick procedure - common for all upper menu buttons
+     * @brief Main activity button onClick procedure - common for all upper main_menu buttons
      * @param v the View (Button) that was clicked
      */
     public void btns_onClick(View v) {
@@ -250,8 +250,7 @@ public class Chart2 extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         startActivity(new Intent(Chart2.this, MainActivity.class));
         finish();
     }
@@ -333,8 +332,8 @@ public class Chart2 extends AppCompatActivity {
 
         // Read chart data form JSON object
         try {
-            JSONObject weatherStation = jObject.getJSONObject("WeatherStation");
-            reading = (double)weatherStation.get("temperature");
+            JSONObject data = jObject.getJSONObject("data").getJSONObject("TPH");
+            reading = (double)data.get("temperature");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -355,8 +354,8 @@ public class Chart2 extends AppCompatActivity {
 
         // Read chart data form JSON object
         try {
-            JSONObject weatherStation = jObject.getJSONObject("WeatherStation");
-            reading = (double)weatherStation.get("pressure");
+            JSONObject data = jObject.getJSONObject("data").getJSONObject("TPH");
+            reading = (double)data.get("pressure");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -377,8 +376,8 @@ public class Chart2 extends AppCompatActivity {
 
         // Read chart data form JSON object
         try {
-            JSONObject weatherStation = jObject.getJSONObject("WeatherStation");
-            reading = (double)weatherStation.get("humidity");
+            JSONObject data = jObject.getJSONObject("data").getJSONObject("TPH");
+            reading = (double)data.get("humidity");
         } catch (JSONException e) {
             e.printStackTrace();
         }

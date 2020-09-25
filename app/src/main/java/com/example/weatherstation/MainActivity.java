@@ -16,21 +16,33 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.menu);
+        setContentView(R.layout.main_menu);
     }
 
     public void btns_onClick(View v) {
         switch (v.getId()) {
+            case R.id.joy__button: {
+                openJoy();
+                break;
+            }
+            case R.id.rpy__button: {
+                openRPY();
+                break;
+            }
             case R.id.chart_button: {
                 openCharts();
                 break;
             }
-          case R.id.led_button: {
+            case R.id.led_button: {
                 openLED();
                 break;
-          }
+            }
             case R.id.settings_button: {
                 openConfig();
+                break;
+            }
+            case R.id.table_button: {
+                openTable();
                 break;
             }
             default: {
@@ -45,6 +57,10 @@ public class MainActivity extends AppCompatActivity {
         finish();
         moveTaskToBack(true);
     }
+
+    private void openRPY() { startActivity(new Intent(MainActivity.this, ChartRPY.class)); }
+
+    private void openJoy() { startActivity(new Intent(MainActivity.this, Joystick.class)); }
 
     private void openConfig() {
         startActivity(new Intent(MainActivity.this, MainConfig.class));
@@ -65,4 +81,5 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
+    private void openTable() { startActivity(new Intent (MainActivity.this, Table.class)); }
 }

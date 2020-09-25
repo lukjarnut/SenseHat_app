@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Chart2">
+    tools:context=".ChartRPY">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -116,33 +116,49 @@
 
         </LinearLayout>
         <TextView
-            android:id="@+id/Label1"
+            android:id="@+id/rollLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/Label1Text"/>
+            android:text="@string/rollText"/>
 
         <com.jjoe64.graphview.GraphView
-            android:id="@+id/firstGraph"
+            android:id="@+id/rollGraph"
             android:layout_width="match_parent"
-            android:layout_height="250dp" />
+            android:layout_height="130dp" />
 
+        <View
+            android:layout_width="0dp"
+            android:layout_height="5dp"
+            android:layout_weight="1" />
+        <TextView
+
+            android:id="@+id/pitchLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/pitchText"/>
+
+        <com.jjoe64.graphview.GraphView
+            android:id="@+id/pitchGraph"
+            android:layout_width="match_parent"
+            android:layout_height="130dp" />
         <View
             android:layout_width="0dp"
             android:layout_height="5dp"
             android:layout_weight="1" />
 
         <TextView
-            android:id="@+id/Label2"
+            android:id="@+id/YawLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/Label2Text"/>
+            android:text="@string/yawText"/>
 
         <com.jjoe64.graphview.GraphView
-            android:id="@+id/secondGraph"
+            android:id="@+id/yawGraph"
             android:layout_width="match_parent"
-            android:layout_height="250dp" />
+            android:layout_height="130dp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

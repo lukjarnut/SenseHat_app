@@ -13,7 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ChartConfig" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,10 +21,18 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainConfig" />
-        <activity android:name=".Chart1"></activity>
-        <activity android:name=".Chart2"></activity>
-        <activity android:name=".Chart3"></activity>
-        <activity android:name=".LED_Matrix"></activity>
+
+        <activity android:name=".Chart1" />
+        <activity android:name=".Chart2" />
+        <activity android:name=".Chart3" />
+        <activity android:name=".ChartConfig" />
+
+        <activity android:name=".LED_Matrix" />
+        <activity android:name=".Table" />
+        <activity android:name=".Joystick" />
+
+        <activity android:name=".ChartRPY" />
+        <activity android:name=".ChartRPY_Config" />
     </application>
 
 </manifest>

@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Chart2">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -113,36 +111,43 @@
                 android:layout_marginEnd="5dp"
                 android:gravity="end"
                 app:layout_constraintEnd_toEndOf="parent" />
-
         </LinearLayout>
-        <TextView
-            android:id="@+id/Label1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/Label1Text"/>
 
-        <com.jjoe64.graphview.GraphView
-            android:id="@+id/firstGraph"
+            <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="250dp" />
+            android:layout_height="match_parent"
+            android:stretchColumns="1">
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="5dp"
-            android:layout_weight="1" />
+            <TableRow>
+                <TextView
+                    android:text="Name1"
+                    android:padding="3dip" />
+                <TextView
+                    android:text="Value 1"
+                    android:gravity="right"
+                    android:padding="3dip" />
+                <TextView
+                    android:text="Unit 1"
+                    android:gravity="right"
+                    android:padding="3dip" />
 
-        <TextView
-            android:id="@+id/Label2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/Label2Text"/>
+            </TableRow>
 
-        <com.jjoe64.graphview.GraphView
-            android:id="@+id/secondGraph"
-            android:layout_width="match_parent"
-            android:layout_height="250dp" />
+            <TableRow>
+                <TextView
+                    android:text="Name1"
+                    android:padding="3dip" />
+                <TextView
+                    android:text="Value 1"
+                    android:gravity="right"
+                    android:padding="3dip" />
+                <TextView
+                    android:text="Unit 1"
+                    android:gravity="right"
+                    android:padding="3dip" />
+
+            </TableRow>
+        </TableLayout>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

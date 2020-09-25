@@ -20,6 +20,30 @@
             android:layout_height="200dp"
             android:layout_weight="1" />
         <Button
+            android:id="@+id/joy__button"
+            android:layout_width="229dp"
+            android:layout_height="64dp"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:text="@string/JoyBtn"
+            android:layout_gravity="center"
+            android:onClick="btns_onClick"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1" />
+        <Button
+            android:id="@+id/rpy__button"
+            android:layout_width="229dp"
+            android:layout_height="64dp"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:text="@string/RPYBtn"
+            android:layout_gravity="center"
+            android:onClick="btns_onClick"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1" />
+        <Button
             android:id="@+id/chart_button"
             android:layout_width="229dp"
             android:layout_height="64dp"
@@ -48,10 +72,25 @@
             android:layout_weight="1" />
 
         <Button
-            android:id="@+id/settings_button"
+            android:id="@+id/table_button"
             android:layout_width="229dp"
             android:layout_height="64dp"
             style="@style/Widget.AppCompat.Button.Colored"
+            android:text="@string/TableBtn"
+            android:layout_gravity="center"
+            android:onClick="btns_onClick"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/settings_button"
+            android:layout_width="170dp"
+            android:layout_height="40dp"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:background="@android:color/darker_gray"
             android:text="@string/SettingsBtn"
             android:layout_gravity="center"
             android:onClick="btns_onClick"/>

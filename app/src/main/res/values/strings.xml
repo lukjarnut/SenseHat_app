@@ -1,17 +1,26 @@
 <resources>
-    <string name="app_name">Weather Station</string>
+    <string name="app_name">Sense Hat Tool</string>
     <string name="startBtnText">START</string>
     <string name="stopBtnText">STOP</string>
     <string name="configBtnText">CONFIG</string>
 
     <string name="temperatureText">Temperature</string>
-    <string name="pressureText">Pressure</string>
-    <string name="humidityText">Humidity</string>
+    <string name="pressureText">Pressure (hPa)</string>
+    <string name="humidityText">Humidity (%)</string>
     <string name="Label1Text">Temperature</string>
     <string name="Label2Text">Humidity</string>
+    <string name="XaxisText">X Axis</string>
+    <string name="YaxisText">Y Axis</string>
 
-    <string name="ChartBtn">Charts</string>
+    <string name="rollText">Roll</string>
+    <string name="pitchText">Pitch</string>
+    <string name="yawText">Yaw</string>
+
+    <string name="ChartBtn">Temperature, Humidity, Pressure</string>
+    <string name="RPYBtn">Roll, Pitch, Yaw</string>
+    <string name="JoyBtn">Joystick</string>
     <string name="LEDBtn">LED Matrix</string>
+    <string name="TableBtn">Table</string>
     <string name="SettingsBtn">Settings</string>
 
     <string name="Chart_config">Select graphs to show</string>

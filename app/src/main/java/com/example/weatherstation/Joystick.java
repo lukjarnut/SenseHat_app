@@ -1,7 +1,5 @@
 package com.example.weatherstation;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -12,6 +10,8 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -31,15 +31,11 @@ import java.util.TimerTask;
 
 import static java.lang.Double.isNaN;
 
-public class Chart1 extends AppCompatActivity {
+public class Joystick extends AppCompatActivity {
 
     /* BEGIN config data */
     private String ipAddress = COMMON.CONFIG_IP_ADDRESS;
     private int sampleTime = COMMON.CONFIG_SAMPLE_TIME;
-
-    boolean Temperature_intent;
-    boolean Pressure_intent;
-    boolean Humidity_intent;
     /* END config data */
 
     /* BEGIN widgets */
@@ -47,33 +43,27 @@ public class Chart1 extends AppCompatActivity {
     private TextView textViewSampleTime;
     private TextView textViewError;
 
-    /* Temperature */
-    private final double temperatureGraphMaxX = 10.0d;
-    private final double temperatureGraphMinX = 0.0d;
-    private final double temperatureGraphMaxY = 110.0d;
-    private final double temperatureGraphMinY = -30.0d;
-
-    /* Pressure */
-    private final double pressureGraphMaxX = 10.0d;
-    private final double pressureGraphMinX = 0.0d;
-    private final double pressureGraphMaxY = 1260.0d;
-    private final double pressureGraphMinY = 260.0d;
-
-    /* Humidity */
-    private final double humidityGraphMaxX = 10.0d;
-    private final double humidityGraphMinX = 0.0d;
-    private final double humidityGraphMaxY = 100.0d;
-    private final double humidityGraphMinY = 0.0d;
     /* END widgets */
 
-    private GraphView Graphview;
-    private LineGraphSeries<DataPoint> Series;
-    private int GraphMaxDataPointsNumber = 1000;
-    private double GraphMaxX = 10.0d;
-    private double GraphMinX = 0.0d;
-    private double GraphMaxY = 110.0d;
-    private double GraphMinY = -30.0d;
+    /* X Axis Graph */
+    private GraphView XAxisGraphview;
+    private LineGraphSeries<DataPoint> XAxisSeries;
+    private final int XAxisGraphMaxDataPointsNumber = 1000;
+    private double XAxisGraphMaxX = 10.0d;
+    private double XAxisGraphMinX = 0.0d;
+    private double XAxisGraphMaxY = 110.0d;
+    private double XAxisGraphMinY = -30.0d;
     private AlertDialog.Builder configAlterDialog;
+
+    /* Y Axis Graph */
+    private GraphView YAxisGraphwiev;
+    private LineGraphSeries<DataPoint> YAxisSeries;
+    private final int YAxisGraphMaxDataPointsNumber = 1000;
+    private double YAxisGraphMaxX = 10.0d;
+    private double YAxisGraphMinX = 0.0d;
+    private double YAxisGraphMaxY = 1260.0d;
+    private double YAxisGraphMinY = 260.0d;
+    private AlertDialog.Builder configAlterDialog2;
 
     /* END widgets */
 
@@ -93,34 +83,7 @@ public class Chart1 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Temperature_intent = getIntent().getBooleanExtra("Temperature", true);
-        Pressure_intent = getIntent().getBooleanExtra("Pressure", true);
-        Humidity_intent = getIntent().getBooleanExtra("Humidity", true);
-
-        setContentView(R.layout.chart_1);
-        TextView Label1 = (TextView)findViewById(R.id.Label1);
-
-        if (Temperature_intent) {
-            Label1.setText("Temperature + \" (\" + (char)0x00B0 + \"C)\"");
-            GraphMaxX = temperatureGraphMaxX;
-            GraphMinX = temperatureGraphMinX;
-            GraphMaxY = temperatureGraphMaxY;
-            GraphMinY = temperatureGraphMinY;
-        }
-        else if (Pressure_intent) {
-            Label1.setText("Pressure (hPa)");
-            GraphMaxX = pressureGraphMaxX;
-            GraphMinX = pressureGraphMinX;
-            GraphMaxY = pressureGraphMaxY;
-            GraphMinY = pressureGraphMinY;
-        }
-        else {
-            Label1.setText("Humidity (%)");
-            GraphMaxX = humidityGraphMaxX;
-            GraphMinX = humidityGraphMinX;
-            GraphMaxY = humidityGraphMaxY;
-            GraphMinY = humidityGraphMinY;
-        }
+        setContentView(R.layout.joystick);
 
         /* BEGIN initialize widgets */
         /* BEGIN initialize TextViews */
@@ -134,24 +97,33 @@ public class Chart1 extends AppCompatActivity {
         textViewError.setText("");
         /* END initialize TextViews */
 
-        /* BEGIN initialize Graph */
+        /* BEGIN initialize Graphs */
         // https://github.com/jjoe64/GraphView/wiki
-        final TextView textView = (TextView) findViewById(R.id.pressureLabel);
+        XAxisGraphview = (GraphView)findViewById(R.id.X_graph_joy);
+        XAxisSeries = new LineGraphSeries<>(new DataPoint[]{});
+        XAxisGraphview.addSeries(XAxisSeries);
+        XAxisGraphview.getViewport().setXAxisBoundsManual(true);
+        XAxisGraphview.getViewport().setMinX(XAxisGraphMinX);
+        XAxisGraphview.getViewport().setMaxX(XAxisGraphMaxX);
+        XAxisGraphview.getViewport().setYAxisBoundsManual(true);
+        XAxisGraphview.getViewport().setMinY(XAxisGraphMinY);
+        XAxisGraphview.getViewport().setMaxY(XAxisGraphMaxY);
 
-        Graphview = (GraphView)findViewById(R.id.Graph1);
-        Series = new LineGraphSeries<>(new DataPoint[]{});
-        Graphview.addSeries(Series);
-        Graphview.getViewport().setXAxisBoundsManual(true);
-        Graphview.getViewport().setMinX(GraphMinX);
-        Graphview.getViewport().setMaxX(GraphMaxX);
-        Graphview.getViewport().setYAxisBoundsManual(true);
-        Graphview.getViewport().setMinY(GraphMinY);
-        Graphview.getViewport().setMaxY(GraphMaxY);
+        YAxisGraphwiev = (GraphView)findViewById(R.id.Y_graph_joy);
+        YAxisSeries = new LineGraphSeries<>(new DataPoint[]{});
+        YAxisGraphwiev.addSeries(YAxisSeries);
+        YAxisGraphwiev.getViewport().setXAxisBoundsManual(true);
+        YAxisGraphwiev.getViewport().setMinX(YAxisGraphMinX);
+        YAxisGraphwiev.getViewport().setMaxX(YAxisGraphMaxX);
+        YAxisGraphwiev.getViewport().setYAxisBoundsManual(true);
+        YAxisGraphwiev.getViewport().setMinY(YAxisGraphMinY);
+        YAxisGraphwiev.getViewport().setMaxY(YAxisGraphMaxY);
 
-        /* END initialize Graph */
+
+        /* END initialize Graphs */
 
         /* BEGIN config alter dialog */
-        configAlterDialog = new AlertDialog.Builder(Chart1.this);
+        configAlterDialog = new AlertDialog.Builder(Joystick.this);
         configAlterDialog.setTitle("This will STOP data acquisition. Proceed?");
         configAlterDialog.setIcon(android.R.drawable.ic_dialog_alert);
         configAlterDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -169,13 +141,12 @@ public class Chart1 extends AppCompatActivity {
         /* END initialize widgets */
 
         // Initialize Volley request queue
-        queue = Volley.newRequestQueue(Chart1.this);
+        queue = Volley.newRequestQueue(Joystick.this);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent dataIntent) {
         super.onActivityResult(requestCode, resultCode, dataIntent);
-        //if ((requestCode == COMMON.REQUEST_CODE_CONFIG) && (resultCode == RESULT_OK)) {
 
         // IoT server IP address
         textViewIP.setText(getIpAddressDisplayText(ipAddress));
@@ -212,9 +183,8 @@ public class Chart1 extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed()
-    {
-        startActivity(new Intent(Chart1.this, MainActivity.class));
+    public void onBackPressed() {
+        startActivity(new Intent(Joystick.this, MainActivity.class));
         finish();
     }
 
@@ -274,10 +244,9 @@ public class Chart1 extends AppCompatActivity {
      * @brief Called when the user taps the 'Config' button.
      * */
     private void openConfig() {
-        Intent intent = new Intent(getBaseContext(), ChartConfig.class);
-        intent.putExtra("Temperature", Temperature_intent);
-        intent.putExtra("Pressure", Pressure_intent);
-        intent.putExtra("Humidity", Humidity_intent);
+        Intent intent = new Intent(this, ChartRPY_Config.class);
+        String str = "ChartJoy";
+        intent.putExtra("Chart", str);
         startActivity(intent);
     }
 
@@ -324,29 +293,6 @@ public class Chart1 extends AppCompatActivity {
         }
         return reading;
     }
-
-    private double getHumidityFromResponse(String response) {
-        JSONObject jObject;
-        double reading = Float.NaN;
-
-        // Create generic JSON object form string
-        try {
-            jObject = new JSONObject(response);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return reading;
-        }
-
-        // Read chart data form JSON object
-        try {
-            JSONObject data = jObject.getJSONObject("data").getJSONObject("TPH");
-            reading = (double)data.get("humidity");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return reading;
-    }
-
     /**
      * @brief Starts new 'Timer' (if currently not exist) and schedules periodic task.
      */
@@ -453,33 +399,22 @@ public class Chart1 extends AppCompatActivity {
             requestTimerTimeStamp += getValidTimeStampIncrease(requestTimerCurrentTime);
 
             // get raw data from JSON response
-            double data;
-
-            if(Temperature_intent) {
-                data = getTemperatureFromResponse(response);
-            }
-            else if(Pressure_intent) {
-                data = getPressureFromResponse(response);
-            }
-            else {
-                data = getHumidityFromResponse(response);
-            }
+            double temperature = getTemperatureFromResponse(response);
+            double pressure = getPressureFromResponse(response);
 
             // update chart
-            if (isNaN(data)) {
-                errorHandling(COMMON.ERROR_NAN_DATA);
-
-            } else {
 
                 // update plot series
                 double timeStamp = requestTimerTimeStamp / 1000.0; // [sec]
-                boolean scrollGraph = (timeStamp > GraphMaxX);
+                boolean scrollGraph = (timeStamp > XAxisGraphMaxX);
 
-                Series.appendData(new DataPoint(timeStamp, data), scrollGraph, GraphMaxDataPointsNumber);
+                //add new data to chart
+                XAxisSeries.appendData(new DataPoint(timeStamp, pressure), scrollGraph, YAxisGraphMaxDataPointsNumber);
+                YAxisSeries.appendData(new DataPoint(timeStamp, temperature), scrollGraph, YAxisGraphMaxDataPointsNumber);
 
                 // refresh chart
-                Graphview.onDataChanged(true, true);
-            }
+                XAxisGraphview.onDataChanged(true, true);
+                YAxisGraphwiev.onDataChanged(true, true);
 
             // remember previous time stamp
             requestTimerPreviousTime = requestTimerCurrentTime;
