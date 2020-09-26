@@ -2,5 +2,5 @@
 <resources>
     <dimen name="Chart_settings_font_size">20sp</dimen>
     <dimen name="Chart_settings_padding">6sp</dimen>
-
+    <dimen name="Table_cells_padding">5sp</dimen>
 </resources>

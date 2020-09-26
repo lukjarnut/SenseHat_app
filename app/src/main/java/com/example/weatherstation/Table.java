@@ -20,6 +20,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Timer;
@@ -38,6 +39,16 @@ public class Table extends AppCompatActivity {
     private TextView textViewIP;
     private TextView textViewSampleTime;
     private TextView textViewError;
+
+    private TextView roll_view;
+    private TextView pitch_view;
+    private TextView yaw_view;
+    private TextView temperature_view;
+    private TextView pressure_view;
+    private TextView humidity_view;
+    private TextView joy_x_view;
+    private TextView joy_y_view;
+
     /* END widgets */
 
     /* BEGIN request timer */
@@ -59,6 +70,16 @@ public class Table extends AppCompatActivity {
 
         /* BEGIN initialize widgets */
         /* BEGIN initialize TextViews */
+        roll_view = (TextView) findViewById(R.id.Tabel_value_1);
+        pitch_view = (TextView) findViewById(R.id.Tabel_value_2);
+        yaw_view = (TextView) findViewById(R.id.Tabel_value_3);
+        temperature_view = (TextView) findViewById(R.id.Tabel_value_4);
+        humidity_view = (TextView) findViewById(R.id.Tabel_value_5);
+        pressure_view = (TextView) findViewById(R.id.Tabel_value_6);
+        joy_x_view = (TextView) findViewById(R.id.Tabel_value_7);
+        joy_y_view = (TextView) findViewById(R.id.Tabel_value_8);
+
+
         textViewIP = findViewById(R.id.textViewIP);
         textViewIP.setText(getIpAddressDisplayText(ipAddress));
 
@@ -185,26 +206,98 @@ public class Table extends AppCompatActivity {
         }
     }
 
+    /*private double getHumidityFromResponse(String response) {
+        JSONObject jObject;
+        double reading = Float.NaN;
+
+        // Create generic JSON object form string
+        try {
+            jObject = new JSONObject(response);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return reading;
+        }
+
+        // Read chart data form JSON object
+        try {
+            JSONObject data = jObject.getJSONObject("data").getJSONObject("TPH");
+            reading = (double)data.get("humidity");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return reading;
+    }*/
+
     /**
      * @brief GET response handling - chart data series updated with IoT server data.
      */
+    @SuppressLint("SetTextI18n")
     private void responseHandling(String response) {
         if (requestTimer != null) {
             // get time stamp with SystemClock
             long requestTimerCurrentTime = SystemClock.uptimeMillis(); // current time
             requestTimerTimeStamp += getValidTimeStampIncrease(requestTimerCurrentTime);
 
-            JSONObject jObject;
-            // get raw data from JSON response
-            double data;
+            JSONObject jObject = new JSONObject();
 
-            // update chart
-            // if (isNaN(temperature)||isNaN(humidity)||isNaN(pressure)) {
-            //errorHandling(COMMON.ERROR_NAN_DATA);
-        //else {
-                // update plot series
-                double timeStamp = requestTimerTimeStamp / 1000.0; // [sec]
-            //}
+            // get raw data from JSON response
+            double temperature_value = Float.NaN;
+            double humidity_value = Float.NaN;
+            double pressure_value = Float.NaN;
+
+            double roll_value = Float.NaN;
+            double pitch_value = Float.NaN;
+            double yaw_value = Float.NaN;
+
+            double joy_x_value = Float.NaN;
+            double joy_y_value = Float.NaN;
+
+            // Create generic JSON object form string
+            try {
+                jObject = new JSONObject(response);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            //read temperature, pressure and humidity from JSON object
+            try {
+                JSONObject TPH = jObject.getJSONObject("data").getJSONObject("TPH");
+                temperature_value = (double) TPH.get("temperature");
+                humidity_value = (double)(TPH.get("humidity"));
+                pressure_value = (double)(TPH.get("pressure"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                JSONObject RPY = jObject.getJSONObject("data").getJSONObject("RPY");
+                roll_value = (double)(RPY.get("roll"));
+                pitch_value = (double)(RPY.get("pitch"));
+                yaw_value = (double)(RPY.get("yaw"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                JSONObject joystick = jObject.getJSONObject("data").getJSONObject("joystick");
+                joy_x_value = (double)(joystick.get("joy_x"));
+                joy_y_value = (double)(joystick.get("joy_y"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+
+            //update values
+            temperature_view.setText(Double.toString(temperature_value));
+            pressure_view.setText(Double.toString(pressure_value));
+            humidity_view.setText(Double.toString(humidity_value));
+            roll_view.setText(Double.toString(roll_value));
+            pitch_view.setText(Double.toString(pitch_value));
+            yaw_view.setText(Double.toString(yaw_value));
+            joy_x_view.setText(Double.toString(joy_x_value));
+            joy_y_view.setText(Double.toString(joy_y_value));
+
             // remember previous time stamp
             requestTimerPreviousTime = requestTimerCurrentTime;
         }
@@ -296,16 +389,5 @@ public class Table extends AppCompatActivity {
 
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
-    }
-
-    /**
-     * @brief Called when the user taps the 'Config' button.
-     */
-    private void openConfig() {
-        Intent intent = new Intent(Table.this, ChartRPY_Config.class);
-        String str = "Table";
-        intent.putExtra("Chart", str);
-        startActivity(intent);
-        finish();
     }
 }

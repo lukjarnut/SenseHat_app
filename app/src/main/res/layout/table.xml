@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="35dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -114,38 +114,139 @@
             <TableLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="30dp"
+            android:padding="5dp"
             android:stretchColumns="1">
-
             <TableRow>
                 <TextView
-                    android:text="Name1"
-                    android:padding="3dip" />
+                    android:text="Roll"
+                    android:id="@+id/Tabel_name_1"
+                    android:padding="@dimen/Chart_settings_padding" />
                 <TextView
-                    android:text="Value 1"
+                    android:text="value_roll"
                     android:gravity="right"
-                    android:padding="3dip" />
+                    android:id="@+id/Tabel_value_1"
+                    android:padding="@dimen/Chart_settings_padding" />
                 <TextView
-                    android:text="Unit 1"
+                    android:text="deg"
                     android:gravity="right"
-                    android:padding="3dip" />
-
+                    android:id="@+id/Tabel_unit_1"
+                    android:padding="@dimen/Chart_settings_padding" />
             </TableRow>
-
             <TableRow>
                 <TextView
-                    android:text="Name1"
-                    android:padding="3dip" />
+                    android:text="Pitch"
+                    android:id="@+id/Tabel_name_2"
+                    android:padding="@dimen/Chart_settings_padding" />
                 <TextView
-                    android:text="Value 1"
+                    android:text="value_pitch"
                     android:gravity="right"
-                    android:padding="3dip" />
+                    android:id="@+id/Tabel_value_2"
+                    android:padding="@dimen/Chart_settings_padding" />
                 <TextView
-                    android:text="Unit 1"
+                    android:text="deg"
                     android:gravity="right"
-                    android:padding="3dip" />
-
+                    android:id="@+id/Tabel_unit_2"
+                    android:padding="@dimen/Chart_settings_padding" />
             </TableRow>
-        </TableLayout>
+            <TableRow>
+                <TextView
+                    android:text="Yaw"
+                    android:id="@+id/Tabel_name_3"
+                    android:padding="@dimen/Chart_settings_padding" />
+                <TextView
+                    android:text="value_yaw"
+                    android:gravity="right"
+                    android:id="@+id/Tabel_value_3"
+                    android:padding="@dimen/Chart_settings_padding" />
+                <TextView
+                    android:text="deg"
+                    android:gravity="right"
+                    android:id="@+id/Tabel_unit_3"
+                    android:padding="@dimen/Chart_settings_padding" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:text="Temperature"
+                    android:id="@+id/Tabel_name_4"
+                    android:padding="@dimen/Chart_settings_padding" />
+                <TextView
+                    android:text="value_temperature"
+                    android:gravity="right"
+                    android:id="@+id/Tabel_value_4"
+                    android:padding="@dimen/Chart_settings_padding" />
+                <TextView
+                    android:text="deg C"
+                    android:gravity="right"
+                    android:id="@+id/Tabel_unit_4"
+                    android:padding="@dimen/Chart_settings_padding" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:text="Humidity"
+                    android:id="@+id/Tabel_name_5"
+                    android:padding="@dimen/Chart_settings_padding" />
+                <TextView
+                    android:text="value_humidity"
+                    android:gravity="right"
+                    android:id="@+id/Tabel_value_5"
+                    android:padding="@dimen/Chart_settings_padding" />
+                <TextView
+                    android:text="%"
+                    android:gravity="right"
+                    android:id="@+id/Tabel_unit_5"
+                    android:padding="@dimen/Chart_settings_padding" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:text="Pressure"
+                    android:id="@+id/Tabel_name_6"
+                    android:padding="@dimen/Chart_settings_padding" />
+                <TextView
+                    android:text="value_pressure"
+                    android:gravity="right"
+                    android:id="@+id/Tabel_value_6"
+                    android:padding="@dimen/Chart_settings_padding" />
+                <TextView
+                    android:text="hPs"
+                    android:gravity="right"
+                    android:id="@+id/Tabel_unit_6"
+                    android:padding="@dimen/Chart_settings_padding" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:text="Joystick X"
+                    android:id="@+id/Tabel_name_7"
+                    android:padding="@dimen/Chart_settings_padding" />
+                <TextView
+                    android:text="value_joystick_x"
+                    android:gravity="right"
+                    android:id="@+id/Tabel_value_7"
+                    android:padding="@dimen/Chart_settings_padding" />
+                <TextView
+                    android:text=""
+                    android:gravity="right"
+                    android:id="@+id/Tabel_unit_7"
+                    android:padding="@dimen/Chart_settings_padding" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:text="Joystick Y"
+                    android:id="@+id/Tabel_name_8"
+                    android:padding="@dimen/Chart_settings_padding" />
+                <TextView
+                    android:text="value_joystick_x"
+                    android:gravity="right"
+                    android:id="@+id/Tabel_value_8"
+                    android:padding="@dimen/Chart_settings_padding" />
+                <TextView
+                    android:text=""
+                    android:gravity="right"
+                    android:id="@+id/Tabel_unit_8"
+                    android:padding="@dimen/Chart_settings_padding" />
+            </TableRow>
+
+            </TableLayout>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

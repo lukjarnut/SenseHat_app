@@ -278,7 +278,8 @@ public class Chart3 extends AppCompatActivity {
         // Create generic JSON object form string
         try {
             jObject = new JSONObject(response);
-        } catch (JSONException e) {
+        }
+        catch (JSONException e) {
             e.printStackTrace();
             return reading;
         }
