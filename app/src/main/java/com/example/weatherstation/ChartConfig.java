@@ -29,10 +29,13 @@ public class ChartConfig extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chart_config);
 
+        /* BEGIN get data from intent*/
         Temperature_boolean = getIntent().getBooleanExtra("Temperature", true);
         Pressure_boolean = getIntent().getBooleanExtra("Pressure", true);
         Humidity_boolean = getIntent().getBooleanExtra("Humidity", true);
+        /* END get data from intent*/
 
+        /* BEGIN initialise switches*/
         Temperature_switch = (Switch)findViewById(R.id.TemperatureSW);
         Pressure_switch = (Switch)findViewById(R.id.PressureSW);
         Humidity_switch = (Switch)findViewById(R.id.HumiditySW);
@@ -45,6 +48,7 @@ public class ChartConfig extends AppCompatActivity {
 
         if(Humidity_boolean) { Humidity_switch.setChecked(true); }
         else { Humidity_switch.setChecked(false); }
+        /* END initialise switches*/
 
         /* BEGIN config alter dialog */
         configAlterDialog = new AlertDialog.Builder(ChartConfig.this);
@@ -89,6 +93,9 @@ public class ChartConfig extends AppCompatActivity {
         }
     }
 
+    /**
+     * @brief Check how many charts user selected.
+     */
     private int count(){
         int number_of_charts = 0;
         Temperature_boolean = Temperature_switch.isChecked();

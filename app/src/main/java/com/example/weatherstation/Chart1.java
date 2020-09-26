@@ -93,15 +93,18 @@ public class Chart1 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        /* BEGIN get data from inetnt */
         Temperature_intent = getIntent().getBooleanExtra("Temperature", true);
         Pressure_intent = getIntent().getBooleanExtra("Pressure", true);
         Humidity_intent = getIntent().getBooleanExtra("Humidity", true);
+        /* BEGIN get data from inetnt */
 
         setContentView(R.layout.chart_1);
-        TextView Label1 = (TextView)findViewById(R.id.Label1);
 
+        /* BEGIN initialize graphs */
+        TextView Label1 = (TextView)findViewById(R.id.Label1);
         if (Temperature_intent) {
-            Label1.setText("Temperature + \" (\" + (char)0x00B0 + \"C)\"");
+            Label1.setText("Temperature");
             GraphMaxX = temperatureGraphMaxX;
             GraphMinX = temperatureGraphMinX;
             GraphMaxY = temperatureGraphMaxY;
@@ -122,19 +125,6 @@ public class Chart1 extends AppCompatActivity {
             GraphMinY = humidityGraphMinY;
         }
 
-        /* BEGIN initialize widgets */
-        /* BEGIN initialize TextViews */
-        textViewIP = findViewById(R.id.textViewIP);
-        textViewIP.setText(getIpAddressDisplayText(ipAddress));
-
-        textViewSampleTime = findViewById(R.id.textViewSampleTime);
-        textViewSampleTime.setText(getSampleTimeDisplayText(Integer.toString(sampleTime)));
-
-        textViewError = findViewById(R.id.textViewErrorMsg);
-        textViewError.setText("");
-        /* END initialize TextViews */
-
-        /* BEGIN initialize Graph */
         // https://github.com/jjoe64/GraphView/wiki
         final TextView textView = (TextView) findViewById(R.id.pressureLabel);
 
@@ -147,8 +137,19 @@ public class Chart1 extends AppCompatActivity {
         Graphview.getViewport().setYAxisBoundsManual(true);
         Graphview.getViewport().setMinY(GraphMinY);
         Graphview.getViewport().setMaxY(GraphMaxY);
+        /* END initialize graphs */
 
-        /* END initialize Graph */
+        /* BEGIN initialize widgets */
+        /* BEGIN initialize TextViews */
+        textViewIP = findViewById(R.id.textViewIP);
+        textViewIP.setText(getIpAddressDisplayText(ipAddress));
+
+        textViewSampleTime = findViewById(R.id.textViewSampleTime);
+        textViewSampleTime.setText(getSampleTimeDisplayText(Integer.toString(sampleTime)));
+
+        textViewError = findViewById(R.id.textViewErrorMsg);
+        textViewError.setText("");
+        /* END initialize TextViews */
 
         /* BEGIN config alter dialog */
         configAlterDialog = new AlertDialog.Builder(Chart1.this);
@@ -455,6 +456,7 @@ public class Chart1 extends AppCompatActivity {
             // get raw data from JSON response
             double data;
 
+            // get needed data
             if(Temperature_intent) {
                 data = getTemperatureFromResponse(response);
             }

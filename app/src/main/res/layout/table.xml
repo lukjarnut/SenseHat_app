@@ -123,7 +123,7 @@
                     android:id="@+id/Tabel_name_1"
                     android:padding="@dimen/Chart_settings_padding" />
                 <TextView
-                    android:text="value_roll"
+                    android:text="0"
                     android:gravity="right"
                     android:id="@+id/Tabel_value_1"
                     android:padding="@dimen/Chart_settings_padding" />
@@ -139,7 +139,7 @@
                     android:id="@+id/Tabel_name_2"
                     android:padding="@dimen/Chart_settings_padding" />
                 <TextView
-                    android:text="value_pitch"
+                    android:text="0"
                     android:gravity="right"
                     android:id="@+id/Tabel_value_2"
                     android:padding="@dimen/Chart_settings_padding" />
@@ -155,7 +155,7 @@
                     android:id="@+id/Tabel_name_3"
                     android:padding="@dimen/Chart_settings_padding" />
                 <TextView
-                    android:text="value_yaw"
+                    android:text="0"
                     android:gravity="right"
                     android:id="@+id/Tabel_value_3"
                     android:padding="@dimen/Chart_settings_padding" />
@@ -171,7 +171,7 @@
                     android:id="@+id/Tabel_name_4"
                     android:padding="@dimen/Chart_settings_padding" />
                 <TextView
-                    android:text="value_temperature"
+                    android:text="0"
                     android:gravity="right"
                     android:id="@+id/Tabel_value_4"
                     android:padding="@dimen/Chart_settings_padding" />
@@ -187,7 +187,7 @@
                     android:id="@+id/Tabel_name_5"
                     android:padding="@dimen/Chart_settings_padding" />
                 <TextView
-                    android:text="value_humidity"
+                    android:text="0"
                     android:gravity="right"
                     android:id="@+id/Tabel_value_5"
                     android:padding="@dimen/Chart_settings_padding" />
@@ -203,7 +203,7 @@
                     android:id="@+id/Tabel_name_6"
                     android:padding="@dimen/Chart_settings_padding" />
                 <TextView
-                    android:text="value_pressure"
+                    android:text="0"
                     android:gravity="right"
                     android:id="@+id/Tabel_value_6"
                     android:padding="@dimen/Chart_settings_padding" />
@@ -219,7 +219,7 @@
                     android:id="@+id/Tabel_name_7"
                     android:padding="@dimen/Chart_settings_padding" />
                 <TextView
-                    android:text="value_joystick_x"
+                    android:text="0"
                     android:gravity="right"
                     android:id="@+id/Tabel_value_7"
                     android:padding="@dimen/Chart_settings_padding" />
@@ -235,7 +235,7 @@
                     android:id="@+id/Tabel_name_8"
                     android:padding="@dimen/Chart_settings_padding" />
                 <TextView
-                    android:text="value_joystick_x"
+                    android:text="0"
                     android:gravity="right"
                     android:id="@+id/Tabel_value_8"
                     android:padding="@dimen/Chart_settings_padding" />

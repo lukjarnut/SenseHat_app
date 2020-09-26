@@ -32,7 +32,6 @@
         <activity android:name=".Joystick" />
 
         <activity android:name=".ChartRPY" />
-        <activity android:name=".ChartRPY_Config" />
     </application>
 
 </manifest>

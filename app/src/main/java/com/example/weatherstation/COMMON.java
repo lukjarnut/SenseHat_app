@@ -18,5 +18,5 @@ public class COMMON {
     public final static int ERROR_RESPONSE = -3;
 
     // IoT server data
-    public final static String FILE_NAME = "sense_hat.json"; //"/sense_hat/sense_joy.php?t=c&h=%&p=hpa";
+    public final static String FILE_NAME = "dane.json"; //"/sense_hat/sense_joy.php?t=c&h=%&p=hpa";
 }

@@ -238,16 +238,6 @@ public class ChartRPY extends AppCompatActivity {
         }
     }
 
-    /**
-     * @brief Called when the user taps the 'Config' button.
-     * */
-    private void openConfig() {
-        Intent intent = new Intent(this, ChartRPY_Config.class);
-        String str = "ChartRPY";
-        intent.putExtra("Chart", str);
-        startActivity(intent);
-    }
-
     private double getRollFromResponse(String response) {
         JSONObject jObject;
         double reading = Float.NaN;

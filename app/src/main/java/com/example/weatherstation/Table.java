@@ -79,7 +79,6 @@ public class Table extends AppCompatActivity {
         joy_x_view = (TextView) findViewById(R.id.Tabel_value_7);
         joy_y_view = (TextView) findViewById(R.id.Tabel_value_8);
 
-
         textViewIP = findViewById(R.id.textViewIP);
         textViewIP.setText(getIpAddressDisplayText(ipAddress));
 
@@ -206,28 +205,6 @@ public class Table extends AppCompatActivity {
         }
     }
 
-    /*private double getHumidityFromResponse(String response) {
-        JSONObject jObject;
-        double reading = Float.NaN;
-
-        // Create generic JSON object form string
-        try {
-            jObject = new JSONObject(response);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return reading;
-        }
-
-        // Read chart data form JSON object
-        try {
-            JSONObject data = jObject.getJSONObject("data").getJSONObject("TPH");
-            reading = (double)data.get("humidity");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return reading;
-    }*/
-
     /**
      * @brief GET response handling - chart data series updated with IoT server data.
      */
@@ -279,9 +256,9 @@ public class Table extends AppCompatActivity {
             }
 
             try {
-                JSONObject joystick = jObject.getJSONObject("data").getJSONObject("joystick");
-                joy_x_value = (double)(joystick.get("joy_x"));
-                joy_y_value = (double)(joystick.get("joy_y"));
+                JSONObject joystick = jObject.getJSONObject("data").getJSONObject("Joystick");
+                joy_x_value = (double)(joystick.get("x"));
+                joy_y_value = (double)(joystick.get("y"));
             } catch (JSONException e) {
                 e.printStackTrace();
             }

@@ -29,8 +29,6 @@ import org.json.JSONObject;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static java.lang.Double.isNaN;
-
 public class Joystick extends AppCompatActivity {
 
     /* BEGIN config data */
@@ -233,17 +231,7 @@ public class Joystick extends AppCompatActivity {
         }
     }
 
-    /**
-     * @brief Called when the user taps the 'Config' button.
-     * */
-    private void openConfig() {
-        Intent intent = new Intent(this, ChartRPY_Config.class);
-        String str = "ChartJoy";
-        intent.putExtra("Chart", str);
-        startActivity(intent);
-    }
-
-    private double getTemperatureFromResponse(String response) {
+    private double getYFromResponse(String response) {
         JSONObject jObject;
         double reading = Float.NaN;
 
@@ -257,15 +245,15 @@ public class Joystick extends AppCompatActivity {
 
         // Read chart data form JSON object
         try {
-            JSONObject data = jObject.getJSONObject("data").getJSONObject("TPH");
-            reading = (double)data.get("temperature");
+            JSONObject data = jObject.getJSONObject("data").getJSONObject("Joystick");
+            reading = (double)data.get("y");
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return reading;
     }
 
-    private double getPressureFromResponse(String response) {
+    private double getXFromResponse(String response) {
         JSONObject jObject;
         double reading = Float.NaN;
 
@@ -279,8 +267,8 @@ public class Joystick extends AppCompatActivity {
 
         // Read chart data form JSON object
         try {
-            JSONObject data = jObject.getJSONObject("data").getJSONObject("TPH");
-            reading = (double)data.get("pressure");
+            JSONObject data = jObject.getJSONObject("data").getJSONObject("Joystick");
+            reading = (double)data.get("x");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -392,8 +380,8 @@ public class Joystick extends AppCompatActivity {
             requestTimerTimeStamp += getValidTimeStampIncrease(requestTimerCurrentTime);
 
             // get raw data from JSON response
-            double temperature = getTemperatureFromResponse(response);
-            double pressure = getPressureFromResponse(response);
+            double y = getYFromResponse(response);
+            double x = getXFromResponse(response);
 
             // update chart
 
@@ -402,8 +390,8 @@ public class Joystick extends AppCompatActivity {
                 boolean scrollGraph = (timeStamp > XAxisGraphMaxX);
 
                 //add new data to chart
-                XAxisSeries.appendData(new DataPoint(timeStamp, pressure), scrollGraph, YAxisGraphMaxDataPointsNumber);
-                YAxisSeries.appendData(new DataPoint(timeStamp, temperature), scrollGraph, YAxisGraphMaxDataPointsNumber);
+                XAxisSeries.appendData(new DataPoint(timeStamp, y), scrollGraph, YAxisGraphMaxDataPointsNumber);
+                YAxisSeries.appendData(new DataPoint(timeStamp, x), scrollGraph, YAxisGraphMaxDataPointsNumber);
 
                 // refresh chart
                 XAxisGraphview.onDataChanged(true, true);
