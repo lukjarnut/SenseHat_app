@@ -51,7 +51,7 @@ public class ChartRPY extends AppCompatActivity {
     private LineGraphSeries<DataPoint> pitchSeries;
     private LineGraphSeries<DataPoint> yawSeries;
     private final int GraphMaxDataPointsNumber = 1000;
-    private final double GraphMaxX = 180.0d;
+    private final double GraphMaxX = 80.0d;
     private final double GraphMinX = 0.0d;
     private final double GraphMaxY = 180.0d;
     private final double GraphMinY = -180.0d;
@@ -357,7 +357,9 @@ public class ChartRPY extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
-                    public void onResponse(String response) { responseHandling(response); }
+                    public void onResponse(String response) {
+                        responseHandling(response);
+                    }
                 },
                 new Response.ErrorListener() {
                     @Override
