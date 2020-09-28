@@ -175,9 +175,9 @@ public class LED_Matrix extends AppCompatActivity {
     String ledIndexToJsonColor(int x, int y) {
         String _x = Integer.toString(x);
         String _y = Integer.toString(y);
-        String _r = Integer.toString(r);
-        String _g = Integer.toString(g);
-        String _b = Integer.toString(b);
+        String _r = Integer.toString(ledColors[x][y][0]);
+        String _g = Integer.toString(ledColors[x][y][1]);
+        String _b = Integer.toString(ledColors[x][y][2]);
         return "["+_x+","+_y+","+_r+","+_g+","+_b+"]";
     }
 
@@ -226,7 +226,7 @@ public class LED_Matrix extends AppCompatActivity {
 
     public void sendControlRequest(View v)
     {
-        url = urlText.getText().toString();
+        //url = urlText.getText().toString();
         StringRequest postRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -260,7 +260,7 @@ public class LED_Matrix extends AppCompatActivity {
 
     void sendClearRequest()
     {
-        url = urlText.getText().toString();
+        //url = urlText.getText().toString();
         StringRequest postRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override

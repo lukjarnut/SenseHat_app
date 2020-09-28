@@ -130,7 +130,6 @@ public class ChartRPY extends AppCompatActivity {
         configAlterDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 stopRequestTimerTask();
-                openConfig();
             }
         });
         configAlterDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
